@@ -5,11 +5,18 @@ namespace MathLibrary
     struct Color
     {
         //color's public field
+    public:
         unsigned int rgba;
 
         //color's constructors
+        Color() 
+        {
 
-
+        }
+        Color::Color()
+        {
+        
+        }
         //color's functions/methods
         unsigned char getRed()
         {
