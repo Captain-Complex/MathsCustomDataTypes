@@ -11,7 +11,7 @@ namespace MathLibrary
         //color's constructors
         Color() 
         {
-
+            rgba = 255;
         }
         Color::Color()
         {

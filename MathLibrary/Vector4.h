@@ -22,7 +22,7 @@ namespace MathLibrary
 
         }
         //vector4's operators
-        /*Vector4 operator + (Vector4& v4Add)
+        Vector4 operator + (Vector4& v4Add)
         {
             Vector4 TempAdd;
             TempAdd.x = x + v4Add.x;
@@ -49,15 +49,15 @@ namespace MathLibrary
             TempMultiply.w = w * v4Multiply.w;
             return TempMultiply;
         }
-        Vector4 operator *  (Vector4& v3ScalarMultiply)
+        /*Vector4 operator *  (Vector4& v3ScalarMultiply)
         {
 
         }
-        /*Vector4 operator / (Vector4& v3ScalarDivide)
+        Vector4 operator / (Vector4& v3ScalarDivide)
         {
 
         }
-        
+        */
         Vector4 operator = (Vector4& v4Assignment)
         {
             Vector4 TempAssignment;
@@ -94,7 +94,7 @@ namespace MathLibrary
             tempMultiplyAssign.w = w *= v4MulitplyAssign.w;
             return tempMultiplyAssign;
         }
-        Vector4 operator *  (Vector4& v4ScalarMultiplyAssign)
+        /*Vector4 operator *  (Vector4& v4ScalarMultiplyAssign)
         {
 
         }
@@ -106,8 +106,8 @@ namespace MathLibrary
         Vector4 operator -()
         {
 
-        }
-        /*bool operator == (Vector4& v4Equality)
+        }*/
+        bool operator == (Vector4& v4Equality)
         {
             return x == v4Equality.x && y == v4Equality.y 
                 && z == v4Equality.z && w == v4Equality.w;
@@ -122,8 +122,39 @@ namespace MathLibrary
             return x < v4LessThan.x && y < v4LessThan.y 
                 && z < v4LessThan.z && w < v4LessThan.w;
         }
-        //V4[n]*/
+        //V4[n]
         //vector4's member functions
+        float Dot(Vector4 v4D)
+        {
 
+        }
+        Vector4 Cross(Vector4 v4C)
+        {
+
+        }
+        float Magnitude()
+        {
+
+        }
+        void Normalise()
+        {
+
+        }
+        Vector4 Normalised()
+        {
+
+        }
+        bool IsApproximatelyEqual(Vector4 v4E)
+        {
+
+        }
+        float AngleBetween(Vector4 v4A)
+        {
+
+        }
+        float Distance(Vector4 v4Dis)
+        {
+
+        }
     };
 }

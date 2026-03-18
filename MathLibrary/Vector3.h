@@ -11,15 +11,19 @@ namespace MathLibrary
         //vector3's constructors
         Vector3()
         {
-         
+            x = 0;
+            y = 0;
+            z = 0;
         }
-        Vector3::Vector3(float x, float y, float z)
+        Vector3::Vector3()
         {
         
         }
-        Vector3(float x, float y, float z)
+        Vector3(float vec3x, float vec3y, float vec3z)
         {
-
+            x = vec3x;
+            y = vec3y;
+            z = vec3z;
         }
         //vector3's operators
         Vector3 operator + (Vector3& v3Add)
@@ -46,15 +50,15 @@ namespace MathLibrary
             tempMultiply.z = z * v3Multiply.z;
             return tempMultiply;
         }
-        /*Vector3 operator *  (Vector3& v3ScalarMultiply)
+        Vector3 operator * (float v3ScalarMult) const
         {
-
-        }*/
-        /*Vector3 operator / (Vector3& v3ScalarDivide)
-        {
-
+            return Vector3(x * v3ScalarMult, y * v3ScalarMult, z * v3ScalarMult);
         }
-        */
+        Vector3 operator / (float v3ScalarDivide) const
+        {
+            return Vector3(x / v3ScalarDivide, y / v3ScalarDivide, z / v3ScalarDivide);
+        }
+        
         Vector3 operator = (Vector3& v3Assignment)
         {
             Vector3 tempAssignment;
@@ -63,7 +67,7 @@ namespace MathLibrary
             tempAssignment.z = z = v3Assignment.z;
             return tempAssignment;
         }
-        Vector3 operator += (Vector3 v3AddAssign)
+        Vector3 operator += (Vector3& v3AddAssign)
         {
             Vector3 tempAddAssign;
             tempAddAssign.x = x += v3AddAssign.x;
@@ -71,7 +75,7 @@ namespace MathLibrary
             tempAddAssign.z = z += v3AddAssign.z;
             return tempAddAssign;
         }
-        Vector3 operator -= (Vector3 v3SubtractAssign)
+        Vector3 operator -= (Vector3& v3SubtractAssign)
         {
             Vector3 tempSubtractAssign;
             tempSubtractAssign.x = x -= v3SubtractAssign.x;
@@ -79,7 +83,7 @@ namespace MathLibrary
             tempSubtractAssign.z = z -= v3SubtractAssign.z;
             return tempSubtractAssign;
         }
-        Vector3 operator *= (Vector3 v3MulitplyAssign)
+        Vector3 operator *= (Vector3& v3MulitplyAssign)
         {
             Vector3 tempMultiplyAssign;
             tempMultiplyAssign.x = x *= v3MulitplyAssign.x;
@@ -87,18 +91,17 @@ namespace MathLibrary
             tempMultiplyAssign.z = z *= v3MulitplyAssign.z;
             return tempMultiplyAssign;
         }
-        /*Vector3 operator *  (Vector3& v3ScalarMultiplyAssign)
+        Vector3 operator *= (const float v3ScalarMultAssign) 
         {
-
-        }*/
-        /*Vector3 operator / (Vector3& v3ScalarDivideAssign)
-        {
-
+            return Vector3(x *= v3ScalarMultAssign, y *= v3ScalarMultAssign, z *= v3ScalarMultAssign);
         }
-        */
+        Vector3 operator /= (const float v3ScalarDivideAssign) 
+        {
+            return Vector3(x /= v3ScalarDivideAssign, y /= v3ScalarDivideAssign, z /= v3ScalarDivideAssign);
+        }
         /*Vector3 operator -()
         {
-           
+            
         }*/
         bool operator == (Vector3& v3Equality)
         {
@@ -112,8 +115,43 @@ namespace MathLibrary
         {
             return x < v3LessThan.x && y < v3LessThan.y && z < v3LessThan.z;
         }
-        //V3[n]
+        //operator [] 
         //vector3's member functions
+        float Dot(Vector3 v3D)
+        {
 
+        }
+        Vector3 Cross(Vector3 v3C)
+        {
+
+        }
+        float Magnitude()
+        {
+
+        }
+        void Normalise()
+        {
+
+        }
+        Vector3 Normalised()
+        {
+
+        }
+        bool IsApproximatelyEqual(Vector3 v3E)
+        {
+
+        }
+        float AngleBetween(Vector3 v3A)
+        {
+
+        }
+        float Distance(Vector3 v3Dis)
+        {
+
+        }
+        void Angle2D()
+        {
+
+        }
     };
 }
