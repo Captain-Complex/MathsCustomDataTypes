@@ -28,7 +28,7 @@ namespace MathLibrary
             m15 = 0;
             m16 = 1;
         }
-        Matrix4(Matrix4& other)
+        Matrix4(const Matrix4& other)
         {
             m1 = other.m1;
             m2 = other.m2;
@@ -89,14 +89,14 @@ namespace MathLibrary
             return *this;
         }
 
-        bool operator==(Matrix4 equal) const
+        friend bool operator==(Matrix4 lhs,Matrix4 equal)
         {
-            return { m1 == equal.m1 && m2 == equal.m2 && m3 == equal.m3 && m4 == equal.m4 && 
-                m5 == equal.m5 && m6 == equal.m6 && m7 == equal.m7 && m8 == equal.m8 &&
-                m9 == equal.m9 && m10 == equal.m10 && m11 == equal.m11 && m12 == equal.m12 &&
-                m13 == equal.m13 && m14 == equal.m14 && m15 == equal.m15 && m16 == equal.m16 };
+            return  lhs.m1 == equal.m1 && lhs.m2 == equal.m2 && lhs.m3 == equal.m3 && lhs.m4 == equal.m4 && 
+                lhs.m5 == equal.m5 && lhs.m6 == equal.m6 && lhs.m7 == equal.m7 && lhs.m8 == equal.m8 &&
+                lhs.m9 == equal.m9 && lhs.m10 == equal.m10 && lhs.m11 == equal.m11 && lhs.m12 == equal.m12 &&
+                lhs.m13 == equal.m13 && lhs.m14 == equal.m14 && lhs.m15 == equal.m15 && lhs.m16 == equal.m16 ;
         }
-        bool operator!=(Matrix4)
+        friend bool operator!=(Matrix4,Matrix4)
         {
             return {};
         }
@@ -181,6 +181,7 @@ namespace MathLibrary
 
             throw;
         }
+
         //matrix4's member functions
         static Matrix4 MakeRotateX(float)
         {
@@ -204,7 +205,7 @@ namespace MathLibrary
             return {};
         }
 
-        bool IsApproximatelyEqual(Matrix4 rhs, float epsilon = 1e-4f) 
+        bool IsApproximatelyEqual(Matrix4 rhs, float epsilon = 1e-4f)const 
         {
             float deltas[] = {
                 std::abs(m1 - rhs.m1),

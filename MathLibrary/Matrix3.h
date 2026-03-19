@@ -10,42 +10,45 @@ namespace MathLibrary
 
         //matrix3's constructors
         Matrix3()
+
+            :m1{ 1 }
+            , m2{ 0 }
+            , m3{ 0 }
+            , m4{ 0 }
+            , m5{ 1 }
+            , m6{ 0 }
+            , m7{ 0 }
+            , m8{ 0 }
+            , m9{ 1 }
         {
-            m1 = 1;
-            m2 = 0;
-            m3 = 0;
-            m4 = 0;
-            m5 = 1;
-            m6 = 0;
-            m7 = 0;
-            m8 = 0;
-            m9 = 1;
         }
-        Matrix3(Matrix3& other)
+        Matrix3(const Matrix3& other)
+
+            :m1 {other.m1}
+            ,m2 {other.m2}
+            ,m3 {other.m3}
+            ,m4 {other.m4}
+            ,m5 {other.m5}
+            ,m6 {other.m6}
+            ,m7 {other.m7}
+            ,m8 {other.m8}
+            ,m9 {other.m9}
         {
-            m1 = other.m1;
-            m2 = other.m2;
-            m3 = other.m3;
-            m4 = other.m4;
-            m5 = other.m5;
-            m6 = other.m6;
-            m7 = other.m7;
-            m8 = other.m8;
-            m9 = other.m9;
         }
         Matrix3(float mat3m1, float mat3m2, float mat3m3,
                 float mat3m4, float mat3m5, float mat3m6,
                 float mat3m7, float mat3m8, float mat3m9)
+        
+            :m1 {mat3m1}
+            ,m2 {mat3m2}
+            ,m3 {mat3m3}
+            ,m4 {mat3m4}
+            ,m5 {mat3m5}
+            ,m6 {mat3m6}
+            ,m7 {mat3m7}
+            ,m8 {mat3m8}
+            ,m9 {mat3m9}
         {
-            m1 = mat3m1;
-            m2 = mat3m2;
-            m3 = mat3m3;
-            m4 = mat3m4;
-            m5 = mat3m5;
-            m6 = mat3m6;
-            m7 = mat3m7;
-            m8 = mat3m8;
-            m9 = mat3m9;
         }
         //matrix3's operators
         Matrix3& operator = (const Matrix3&)
@@ -53,26 +56,26 @@ namespace MathLibrary
             return *this;
         }
 
-        Vector3 operator*(Vector3)const
+        friend Vector3 operator * (Matrix3,Vector3)
         {
             return {};
         }
-        Matrix3 operator*(Matrix3)const
+       friend Matrix3 operator * (Matrix3, Matrix3)
         {
             return {};
         }
-        Matrix3& operator*=(Matrix3)
+        friend Matrix3 operator *= (Matrix3& lhs, Matrix3)
         {
-            return *this;
+            return lhs;
         }
 
-        bool operator==(Matrix3 equal) const
+        friend bool operator == (Matrix3 lhs, Matrix3 equal)
         {
-            return {m1 == equal.m1 && m2 == equal.m2 && m3 == equal.m3 &&
-                m4 == equal.m4 && m5 == equal.m5 && m6 == equal.m6 &&
-                m7 == equal.m7 && m8 == equal.m8 && m9 == equal.m9};
+            return lhs.m1 == equal.m1 && lhs.m2 == equal.m2 && lhs.m3 == equal.m3 &&
+                lhs.m4 == equal.m4 && lhs.m5 == equal.m5 && lhs.m6 == equal.m6 &&
+                lhs.m7 == equal.m7 && lhs.m8 == equal.m8 && lhs.m9 == equal.m9;
         }
-        bool operator!=(Matrix3 notEqual)
+        friend bool operator!=(Matrix3,Matrix3)
         {
             return {};
         }
@@ -129,12 +132,13 @@ namespace MathLibrary
 
             throw;
         }
+
         //matrix3's member function
         static Matrix3 MakeRotate(float)
         {
             return {};
         }
-        static Matrix3 MakeScale(float, float, float)
+        static Matrix3 MakeScale(float, float)
         {
             return {};
         }
@@ -143,9 +147,28 @@ namespace MathLibrary
             return {};
         }
 
-        bool IsApproximatelyEqual(Matrix3, float = 1e-4f)
+        bool IsApproximatelyEqual(Matrix3 rhs, float epsilon = 1e-4f)const
         {
-            return {};
+            float deltas[] = {
+                std::abs(m1 - rhs.m1),
+                std::abs(m2 - rhs.m2),
+                std::abs(m3 - rhs.m3),
+                std::abs(m4 - rhs.m4),
+                std::abs(m5 - rhs.m5),
+                std::abs(m6 - rhs.m6),
+                std::abs(m7 - rhs.m7),
+                std::abs(m8 - rhs.m8),
+                std::abs(m9 - rhs.m9),
+            };
+            const int arraySize = sizeof(deltas) / sizeof(deltas[0]);
+            for (int i = 0; i < arraySize; ++i)
+            {
+                if (deltas[i] > epsilon)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         Vector3 GetRight()

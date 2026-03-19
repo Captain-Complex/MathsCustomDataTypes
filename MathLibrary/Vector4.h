@@ -118,12 +118,12 @@ namespace MathLibrary
         
         Vector4 operator -()
         {
-
+            return {};
         }
-        bool operator == (Vector4& v4Equality)
+        friend bool operator == (Vector4 lhs,Vector4 v4Equality)
         {
-            return x == v4Equality.x && y == v4Equality.y 
-                && z == v4Equality.z && w == v4Equality.w;
+            return lhs.x == v4Equality.x && lhs.y == v4Equality.y 
+                && lhs.z == v4Equality.z && lhs.w == v4Equality.w;
         }
         bool operator != (Vector4& v4Inequality)
         {
@@ -169,6 +169,11 @@ namespace MathLibrary
             throw;
         }
         //vector4's member functions
+        bool IsApproximatelyEqual(Vector4, float = 1e-4) const
+        {
+            return {};
+        }
+
         float Dot(Vector4) const
         {
             return {};
@@ -177,6 +182,7 @@ namespace MathLibrary
         {
             return {};
         }
+
         float Magnitude() const
         {
             return{};
@@ -189,10 +195,7 @@ namespace MathLibrary
         {
             return {};
         }
-        bool IsApproximatelyEqual(Vector4, float = 1e-4) const
-        {
-            return {};
-        }
+        
         float AngleBetween(Vector4) const
         {
             return {};

@@ -106,9 +106,9 @@ namespace MathLibrary
         {
             return { -x, -y, -z };
         }
-        bool operator == (Vector3& v3Equality)const
+        friend bool operator == (const Vector3 lhs,const Vector3& v3Equality)
         {
-            return x == v3Equality.x && y == v3Equality.y && z == v3Equality.z;
+            return lhs.x == v3Equality.x && lhs.y == v3Equality.y && lhs.z == v3Equality.z;
         }
         bool operator != (Vector3& v3Inequality)const
         {
