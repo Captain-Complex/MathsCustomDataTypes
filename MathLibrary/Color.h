@@ -13,9 +13,9 @@ namespace MathLibrary
         {
             rgba = 255;
         }
-        Color::Color()
+        Color(const Color& copy)
         {
-
+            rgba = copy.rgba;
         }
         Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
         {
@@ -31,7 +31,7 @@ namespace MathLibrary
             return rgba == C.rgba;
         }
         //color's functions/methods
-        unsigned char GetRed()
+        unsigned char GetRed() const
         {
             unsigned char gotRed = static_cast<unsigned char>(rgba >> 24);
             return gotRed;
@@ -41,7 +41,7 @@ namespace MathLibrary
             rgba = rgba & ~(0x000000FF << 24);
             rgba = rgba | (static_cast<unsigned int>(redValue) << 24);
         }
-        unsigned char GetGreen()
+        unsigned char GetGreen() const
         {
             unsigned char gotGreen = static_cast<unsigned char>(rgba >> 16);
             return gotGreen;
@@ -51,7 +51,7 @@ namespace MathLibrary
             rgba = rgba & ~(0x000000FF << 16);
             rgba = rgba | (static_cast<unsigned int>(greenValue) << 16);
         }
-        unsigned char GetBlue()
+        unsigned char GetBlue() const
         {
             unsigned char gotBlue = static_cast<unsigned char>(rgba >> 8);
             return gotBlue;
@@ -61,7 +61,7 @@ namespace MathLibrary
             rgba = rgba & ~(0x000000FF << 8);
             rgba = rgba | (static_cast<unsigned int>(blueValue) << 8);
         }
-        unsigned char GetAlpha()
+        unsigned char GetAlpha() const
         {
             unsigned char gotAlpha = static_cast<unsigned char>(rgba >> 0);
             return gotAlpha;

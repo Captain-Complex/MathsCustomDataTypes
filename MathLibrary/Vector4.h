@@ -11,18 +11,27 @@ namespace MathLibrary
         //vector4's constructors
         Vector4() 
         {
-            
+            x = 0;
+            y = 0;
+            z = 0;
+            w = 0;
         }
-        Vector4::Vector4()
+        Vector4(const Vector4& copy)
         {
-
+            x = copy.x;
+            y = copy.y;
+            z = copy.z;
+            w = copy.w;
         }
-        Vector4(float x, float y, float z, float w)
+        Vector4(float vec4x, float vec4y, float vec4z, float vec4w)
         {
-
+            x = vec4x;
+            y = vec4y;
+            z = vec4z;
+            w = vec4w;
         }
         //vector4's operators
-        Vector4 operator + (Vector4& v4Add)
+        Vector4 operator + (Vector4& v4Add)const
         {
             Vector4 TempAdd;
             TempAdd.x = x + v4Add.x;
@@ -31,7 +40,7 @@ namespace MathLibrary
             TempAdd.w = w + v4Add.w;
             return TempAdd;
         }
-        Vector4 operator - (Vector4& v4Subtract)
+        Vector4 operator - (Vector4& v4Subtract)const
         {
             Vector4 TempSubtract;
             TempSubtract.x = x - v4Subtract.x;
@@ -40,7 +49,7 @@ namespace MathLibrary
             TempSubtract.w = w - v4Subtract.w;
             return TempSubtract;
         }
-        Vector4 operator * (Vector4& v4Multiply)
+        Vector4 operator * (Vector4& v4Multiply)const
         {
             Vector4 TempMultiply;
             TempMultiply.x = x * v4Multiply.x;
@@ -49,15 +58,17 @@ namespace MathLibrary
             TempMultiply.w = w * v4Multiply.w;
             return TempMultiply;
         }
-        /*Vector4 operator *  (Vector4& v3ScalarMultiply)
+        Vector4 operator *  ( float v4ScalarMultiplyAssign) const
         {
-
+            return { x * v4ScalarMultiplyAssign, y * v4ScalarMultiplyAssign,
+                z * v4ScalarMultiplyAssign, w * v4ScalarMultiplyAssign };
         }
-        Vector4 operator / (Vector4& v3ScalarDivide)
+        Vector4 operator / (float v4ScalarDivide) const
         {
-
+            return { x / v4ScalarDivide, y / v4ScalarDivide,
+            z / v4ScalarDivide, w / v4ScalarDivide };
         }
-        */
+        
         Vector4 operator = (Vector4& v4Assignment)
         {
             Vector4 TempAssignment;
@@ -94,19 +105,21 @@ namespace MathLibrary
             tempMultiplyAssign.w = w *= v4MulitplyAssign.w;
             return tempMultiplyAssign;
         }
-        /*Vector4 operator *  (Vector4& v4ScalarMultiplyAssign)
+        Vector4 operator *=  (const float v4ScalarMultiplyAssign) 
         {
-
+            return Vector4(x *= v4ScalarMultiplyAssign, y *= v4ScalarMultiplyAssign,
+                z *= v4ScalarMultiplyAssign, w *= v4ScalarMultiplyAssign);
         }
-        Vector4 operator / (Vector4& v4ScalarDivideAssign)
+        Vector4 operator /= (const float v4ScalarDivideAssign)
         {
-
+            return { x /= v4ScalarDivideAssign, y /= v4ScalarDivideAssign,
+            z /= v4ScalarDivideAssign, w /= v4ScalarDivideAssign };
         }
         
         Vector4 operator -()
         {
 
-        }*/
+        }
         bool operator == (Vector4& v4Equality)
         {
             return x == v4Equality.x && y == v4Equality.y 
@@ -122,39 +135,71 @@ namespace MathLibrary
             return x < v4LessThan.x && y < v4LessThan.y 
                 && z < v4LessThan.z && w < v4LessThan.w;
         }
-        //V4[n]
+        
+        float& operator[] (int i)
+        {
+            switch (i)
+            {
+            case 0:
+                return x;
+            case 1:
+                return y;
+            case 2:
+                return z;
+            case 3:
+                return w;
+            }
+
+            throw;
+        }
+        const float& operator[] (int i) const
+        {
+            switch (i)
+            {
+            case 0:
+                return x;
+            case 1:
+                return y;
+            case 2:
+                return z;
+            case 3:
+                return w;
+            }
+
+            throw;
+        }
         //vector4's member functions
-        float Dot(Vector4 v4D)
+        float Dot(Vector4) const
         {
-
+            return {};
         }
-        Vector4 Cross(Vector4 v4C)
+        Vector4 Cross(Vector4) const
         {
-
+            return {};
         }
-        float Magnitude()
+        float Magnitude() const
         {
-
+            return{};
         }
         void Normalise()
         {
 
         }
-        Vector4 Normalised()
+        Vector4 Normalised() const
         {
-
+            return {};
         }
-        bool IsApproximatelyEqual(Vector4 v4E)
+        bool IsApproximatelyEqual(Vector4, float = 1e-4) const
         {
-
+            return {};
         }
-        float AngleBetween(Vector4 v4A)
+        float AngleBetween(Vector4) const
         {
-
+            return {};
         }
-        float Distance(Vector4 v4Dis)
+        float Distance(Vector4) const
         {
-
+            return {};
         }
     };
 }

@@ -15,9 +15,11 @@ namespace MathLibrary
             y = 0;
             z = 0;
         }
-        Vector3::Vector3()
+        Vector3(const Vector3& other)
         {
-        
+            x = other.x;
+            y = other.y;
+            z = other.z;
         }
         Vector3(float vec3x, float vec3y, float vec3z)
         {
@@ -26,7 +28,7 @@ namespace MathLibrary
             z = vec3z;
         }
         //vector3's operators
-        Vector3 operator + (Vector3& v3Add)
+        Vector3 operator + (Vector3& v3Add)const
         {
             Vector3 tempAdd;
             tempAdd.x = x + v3Add.x;
@@ -34,7 +36,7 @@ namespace MathLibrary
             tempAdd.z = z + v3Add.z;
             return tempAdd;
         }
-        Vector3 operator - (Vector3& v3Subtract)
+        Vector3 operator - (Vector3& v3Subtract)const
         {
             Vector3 tempSubtract;
             tempSubtract.x = x - v3Subtract.x;
@@ -42,7 +44,7 @@ namespace MathLibrary
             tempSubtract.z = z - v3Subtract.z;
             return tempSubtract;
         }
-        Vector3 operator * (Vector3& v3Multiply)
+        Vector3 operator * (Vector3& v3Multiply)const
         {
             Vector3 tempMultiply;
             tempMultiply.x = x * v3Multiply.x;
@@ -91,7 +93,7 @@ namespace MathLibrary
             tempMultiplyAssign.z = z *= v3MulitplyAssign.z;
             return tempMultiplyAssign;
         }
-        Vector3 operator *= (const float v3ScalarMultAssign) 
+        Vector3 operator *= (const float v3ScalarMultAssign)
         {
             return Vector3(x *= v3ScalarMultAssign, y *= v3ScalarMultAssign, z *= v3ScalarMultAssign);
         }
@@ -99,59 +101,106 @@ namespace MathLibrary
         {
             return Vector3(x /= v3ScalarDivideAssign, y /= v3ScalarDivideAssign, z /= v3ScalarDivideAssign);
         }
-        /*Vector3 operator -()
+
+        Vector3 operator -() const
         {
-            
-        }*/
-        bool operator == (Vector3& v3Equality)
+            return { -x, -y, -z };
+        }
+        bool operator == (Vector3& v3Equality)const
         {
             return x == v3Equality.x && y == v3Equality.y && z == v3Equality.z;
         }
-        bool operator != (Vector3& v3Inequality)
+        bool operator != (Vector3& v3Inequality)const
         {
             return x != v3Inequality.x && y != v3Inequality.y && z != v3Inequality.z;
         }
-        bool operator < (Vector3& v3LessThan)
+        bool operator < (Vector3& v3LessThan)const
         {
             return x < v3LessThan.x && y < v3LessThan.y && z < v3LessThan.z;
         }
-        //operator [] 
+
+        float& operator[] (int i)
+        {
+            switch(i)
+            {
+            case 0:
+                return x;
+            case 1:
+                return y;
+            case 2:
+                return z;
+            }
+
+            throw;
+        }
+        const float& operator[] (int i)const
+        {
+            switch (i)
+            {
+            case 0:
+                return x;
+            case 1:
+                return y;
+            case 2:
+                return z;
+            }
+
+            throw;
+
+        }
         //vector3's member functions
-        float Dot(Vector3 v3D)
+        bool IsApproximatelyEqual(Vector3 rhs, float epsilon = 1e-4f) const
         {
+            float deltas[] = {
+                std::abs(x - rhs.x),
+                std::abs(y - rhs.y),
+                std::abs(z - rhs.z),
 
+            };
+            const int arraySize = sizeof(deltas) / sizeof(deltas[0]);
+            for (int i = 0; i < arraySize; ++i)
+            {
+                if (deltas[i] > epsilon)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
-        Vector3 Cross(Vector3 v3C)
-        {
 
+        float Dot(Vector3) const
+        {
+            return{};
         }
-        float Magnitude()
+        Vector3 Cross(Vector3) const
         {
+            return{};
+        }
 
+        float Magnitude() const
+        {
+            return {};
         }
         void Normalise()
         {
 
         }
-        Vector3 Normalised()
+        Vector3 Normalised() const
         {
-
+            return {};
         }
-        bool IsApproximatelyEqual(Vector3 v3E)
-        {
 
+        float AngleBetween(Vector3) const
+        {
+            return {};
         }
-        float AngleBetween(Vector3 v3A)
+        float Distance(Vector3) const
         {
-
+            return {};
         }
-        float Distance(Vector3 v3Dis)
+        float Angle2D() const
         {
-
-        }
-        void Angle2D()
-        {
-
+            return {};
         }
     };
 }
