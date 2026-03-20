@@ -10,45 +10,42 @@ namespace MathLibrary
 
         //matrix3's constructors
         Matrix3()
-
-            :m1{ 1 }
-            , m2{ 0 }
-            , m3{ 0 }
-            , m4{ 0 }
-            , m5{ 1 }
-            , m6{ 0 }
-            , m7{ 0 }
-            , m8{ 0 }
-            , m9{ 1 }
         {
+            m1 = 1;
+            m2 = 0;
+            m3 = 0;
+            m4 = 0;
+            m5 = 1;
+            m6 = 0;
+            m7 = 0;
+            m8 = 0;
+            m9 = 1;
         }
         Matrix3(const Matrix3& other)
-
-            :m1 {other.m1}
-            ,m2 {other.m2}
-            ,m3 {other.m3}
-            ,m4 {other.m4}
-            ,m5 {other.m5}
-            ,m6 {other.m6}
-            ,m7 {other.m7}
-            ,m8 {other.m8}
-            ,m9 {other.m9}
         {
+            m1 = other.m1;
+            m2 = other.m2;
+            m3 = other.m3;
+            m4 = other.m4;
+            m5 = other.m5;
+            m6 = other.m6;
+            m7 = other.m7;
+            m8 = other.m8;
+            m9 = other.m9;
         }
         Matrix3(float mat3m1, float mat3m2, float mat3m3,
                 float mat3m4, float mat3m5, float mat3m6,
                 float mat3m7, float mat3m8, float mat3m9)
-        
-            :m1 {mat3m1}
-            ,m2 {mat3m2}
-            ,m3 {mat3m3}
-            ,m4 {mat3m4}
-            ,m5 {mat3m5}
-            ,m6 {mat3m6}
-            ,m7 {mat3m7}
-            ,m8 {mat3m8}
-            ,m9 {mat3m9}
         {
+            m1 = mat3m1;
+            m2 = mat3m2;
+            m3 = mat3m3;
+            m4 = mat3m4;
+            m5 = mat3m5;
+            m6 = mat3m6;
+            m7 = mat3m7;
+            m8 = mat3m8;
+            m9 = mat3m9;
         }
         //matrix3's operators
         Matrix3& operator = (const Matrix3&)

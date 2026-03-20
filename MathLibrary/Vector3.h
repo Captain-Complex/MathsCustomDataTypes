@@ -1,5 +1,5 @@
 #pragma once
-
+#include <cmath>
 namespace MathLibrary
 {
     struct Vector3
@@ -114,9 +114,18 @@ namespace MathLibrary
         {
             return x != v3Inequality.x && y != v3Inequality.y && z != v3Inequality.z;
         }
-        bool operator < (Vector3& v3LessThan)const
+        friend bool operator < (Vector3 lhs,Vector3 v3LessThan)
         {
-            return x < v3LessThan.x && y < v3LessThan.y && z < v3LessThan.z;
+            if (v3LessThan.x < lhs.x && v3LessThan.y < lhs.y && v3LessThan.z < lhs.z)
+            {
+                return true;
+            }
+            if (lhs.x < v3LessThan.x && lhs.y < v3LessThan.y && lhs.z < v3LessThan.z)
+            {
+                return false;
+            }
+            
+            
         }
 
         float& operator[] (int i)
@@ -148,6 +157,7 @@ namespace MathLibrary
             throw;
 
         }
+
         //vector3's member functions
         bool IsApproximatelyEqual(Vector3 rhs, float epsilon = 1e-4f) const
         {
@@ -168,31 +178,48 @@ namespace MathLibrary
             return true;
         }
 
-        float Dot(Vector3) const
+        float Dot(Vector3 rhs) const
         {
-            return{};
+            return x * rhs.x + y * rhs.y + z * rhs.z;
         }
-        Vector3 Cross(Vector3) const
+        Vector3 Cross(Vector3 rhs) const
         {
-            return{};
+            return {
+            y * rhs.z - z * rhs.y,
+            z * rhs.x - x * rhs.z,
+            x * rhs.y - y * rhs.x
+            };
         }
 
         float Magnitude() const
         {
-            return {};
+            return std::hypot(x, y, z);
         }
         void Normalise()
         {
-
+            float mag = std::hypot(x, y, z);
+            if (mag == 0.f)
+            {
+                return;
+            }
+            x /= mag;
+            y /= mag;
+            z /= mag;
         }
         Vector3 Normalised() const
         {
-            return {};
+            Vector3 result{ *this };
+            result.Normalise();
+            return result;
         }
 
-        float AngleBetween(Vector3) const
+        float AngleBetween(Vector3 other) const
         {
-            return {};
+            float dot = x * other.x + y * other.y + z * other.z;
+            float magLeft = std::hypot(x, y, z);
+            float magRight = std::hypot(other.x, other.y, other.z);
+            float acosResult = std::acos(dot / (magLeft * magRight));
+            return acosResult;
         }
         float Distance(Vector3) const
         {
@@ -200,7 +227,11 @@ namespace MathLibrary
         }
         float Angle2D() const
         {
-            return {};
+            return std::atan2(y,x);
+        }
+        Vector3 CalculateTriangleNormal(Vector3 a, Vector3 b, Vector3 c)
+        {
+
         }
     };
 }

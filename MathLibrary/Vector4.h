@@ -37,7 +37,6 @@ namespace MathLibrary
             TempAdd.x = x + v4Add.x;
             TempAdd.y = y + v4Add.y;
             TempAdd.z = z + v4Add.z;
-            TempAdd.w = w + v4Add.w;
             return TempAdd;
         }
         Vector4 operator - (Vector4& v4Subtract)const
@@ -46,7 +45,6 @@ namespace MathLibrary
             TempSubtract.x = x - v4Subtract.x;
             TempSubtract.y = y - v4Subtract.y;
             TempSubtract.z = z - v4Subtract.z;
-            TempSubtract.w = w - v4Subtract.w;
             return TempSubtract;
         }
         Vector4 operator * (Vector4& v4Multiply)const
@@ -55,18 +53,17 @@ namespace MathLibrary
             TempMultiply.x = x * v4Multiply.x;
             TempMultiply.y = y * v4Multiply.y;
             TempMultiply.z = z * v4Multiply.z;
-            TempMultiply.w = w * v4Multiply.w;
             return TempMultiply;
         }
         Vector4 operator *  ( float v4ScalarMultiplyAssign) const
         {
             return { x * v4ScalarMultiplyAssign, y * v4ScalarMultiplyAssign,
-                z * v4ScalarMultiplyAssign, w * v4ScalarMultiplyAssign };
+                z * v4ScalarMultiplyAssign, w};
         }
         Vector4 operator / (float v4ScalarDivide) const
         {
             return { x / v4ScalarDivide, y / v4ScalarDivide,
-            z / v4ScalarDivide, w / v4ScalarDivide };
+            z / v4ScalarDivide, w};
         }
         
         Vector4 operator = (Vector4& v4Assignment)
@@ -75,7 +72,6 @@ namespace MathLibrary
             TempAssignment.x = x = v4Assignment.x;
             TempAssignment.y = y = v4Assignment.y;
             TempAssignment.z = z = v4Assignment.z;
-            TempAssignment.w = w = v4Assignment.w;
             return TempAssignment;
         }
         Vector4 operator += (Vector4 v4AddAssign)
@@ -84,7 +80,6 @@ namespace MathLibrary
             TempAddAssign.x = x += v4AddAssign.x;
             TempAddAssign.y = y += v4AddAssign.y;
             TempAddAssign.z = z += v4AddAssign.z;
-            TempAddAssign.w = w += v4AddAssign.w;
             return TempAddAssign;
         }
         Vector4 operator -= (Vector4 v4SubtractAssign)
@@ -93,7 +88,6 @@ namespace MathLibrary
             tempSubtractAssign.x = x -= v4SubtractAssign.x;
             tempSubtractAssign.y = y -= v4SubtractAssign.y;
             tempSubtractAssign.z = z -= v4SubtractAssign.z;
-            tempSubtractAssign.w = w -= v4SubtractAssign.w;
             return tempSubtractAssign;
         }
         Vector4 operator *= (Vector4 v4MulitplyAssign)
@@ -168,6 +162,7 @@ namespace MathLibrary
 
             throw;
         }
+
         //vector4's member functions
         bool IsApproximatelyEqual(Vector4, float = 1e-4) const
         {
