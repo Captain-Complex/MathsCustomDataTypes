@@ -53,13 +53,27 @@ namespace MathLibrary
             return *this;
         }
 
-        friend Vector3 operator * (Matrix3,Vector3)
+        friend Vector3 operator * (Matrix3 a,Vector3 b)
         {
-            return {};
+            return {
+                a.m1 * b.x + a.m2 * b.y + a.m3 * b.z,
+                a.m4 * b.x + a.m5 * b.y + a.m6 * b.z,
+                a.m7 * b.x + a.m8 * b.y + a.m9 * b.z,
+            };
         }
-       friend Matrix3 operator * (Matrix3, Matrix3)
+       friend Matrix3 operator * (Matrix3 a, Matrix3 b)
         {
-            return {};
+            return {
+                a.m1 * b.m1 + a.m2 * b.m4 + a.m3 * b.m7,
+                a.m1 * b.m2 + a.m2 * b.m5 + a.m3 * b.m8,
+                a.m1 * b.m3 + a.m2 * b.m6 + a.m3 * b.m9,
+                a.m4 * b.m1 + a.m5 * b.m4 + a.m6 * b.m7,
+                a.m4 * b.m2 + a.m5 * b.m5 + a.m6 * b.m8,
+                a.m4 * b.m3 + a.m5 * b.m6 + a.m6 * b.m9,
+                a.m7 * b.m1 + a.m8 * b.m4 + a.m9 * b.m7,
+                a.m7 * b.m2 + a.m8 * b.m5 + a.m9 * b.m8,
+                a.m7 * b.m3 + a.m8 * b.m6 + a.m9 * b.m9
+            };  
         }
         friend Matrix3 operator *= (Matrix3& lhs, Matrix3)
         {
@@ -155,7 +169,7 @@ namespace MathLibrary
                 std::abs(m6 - rhs.m6),
                 std::abs(m7 - rhs.m7),
                 std::abs(m8 - rhs.m8),
-                std::abs(m9 - rhs.m9),
+                std::abs(m9 - rhs.m9)
             };
             const int arraySize = sizeof(deltas) / sizeof(deltas[0]);
             for (int i = 0; i < arraySize; ++i)

@@ -1,5 +1,5 @@
 #pragma once
-
+#include <cmath>
 namespace MathLibrary
 {
     struct Vector4
@@ -31,36 +31,39 @@ namespace MathLibrary
             w = vec4w;
         }
         //vector4's operators
-        Vector4 operator + (Vector4& v4Add)const
+        Vector4 operator + (Vector4 v4Add)
         {
-            Vector4 TempAdd;
-            TempAdd.x = x + v4Add.x;
-            TempAdd.y = y + v4Add.y;
-            TempAdd.z = z + v4Add.z;
-            return TempAdd;
+            return {
+            x + v4Add.x,
+            y + v4Add.y,
+            z + v4Add.z,
+            w
+            };
         }
-        Vector4 operator - (Vector4& v4Subtract)const
+        Vector4 operator - (Vector4& v4Subtract)
         {
-            Vector4 TempSubtract;
-            TempSubtract.x = x - v4Subtract.x;
-            TempSubtract.y = y - v4Subtract.y;
-            TempSubtract.z = z - v4Subtract.z;
-            return TempSubtract;
+            return {
+            x - v4Subtract.x,
+            y - v4Subtract.y,
+            z - v4Subtract.z,
+            w
+            };
         }
-        Vector4 operator * (Vector4& v4Multiply)const
+        Vector4 operator * (Vector4& v4Multiply)
         {
-            Vector4 TempMultiply;
-            TempMultiply.x = x * v4Multiply.x;
-            TempMultiply.y = y * v4Multiply.y;
-            TempMultiply.z = z * v4Multiply.z;
-            return TempMultiply;
+            return {
+            x * v4Multiply.x,
+            y * v4Multiply.y,
+            z * v4Multiply.z,
+            w
+            };
         }
-        Vector4 operator *  ( float v4ScalarMultiplyAssign) const
+        Vector4 operator *  ( float v4ScalarMultiplyAssign) 
         {
             return { x * v4ScalarMultiplyAssign, y * v4ScalarMultiplyAssign,
                 z * v4ScalarMultiplyAssign, w};
         }
-        Vector4 operator / (float v4ScalarDivide) const
+        Vector4 operator / (float v4ScalarDivide) 
         {
             return { x / v4ScalarDivide, y / v4ScalarDivide,
             z / v4ScalarDivide, w};
@@ -72,6 +75,7 @@ namespace MathLibrary
             TempAssignment.x = x = v4Assignment.x;
             TempAssignment.y = y = v4Assignment.y;
             TempAssignment.z = z = v4Assignment.z;
+            TempAssignment.w = w = v4Assignment.w;
             return TempAssignment;
         }
         Vector4 operator += (Vector4 v4AddAssign)
@@ -80,6 +84,7 @@ namespace MathLibrary
             TempAddAssign.x = x += v4AddAssign.x;
             TempAddAssign.y = y += v4AddAssign.y;
             TempAddAssign.z = z += v4AddAssign.z;
+            TempAddAssign.w = w;
             return TempAddAssign;
         }
         Vector4 operator -= (Vector4 v4SubtractAssign)
@@ -88,6 +93,7 @@ namespace MathLibrary
             tempSubtractAssign.x = x -= v4SubtractAssign.x;
             tempSubtractAssign.y = y -= v4SubtractAssign.y;
             tempSubtractAssign.z = z -= v4SubtractAssign.z;
+            tempSubtractAssign.w = w;
             return tempSubtractAssign;
         }
         Vector4 operator *= (Vector4 v4MulitplyAssign)
@@ -96,24 +102,25 @@ namespace MathLibrary
             tempMultiplyAssign.x = x *= v4MulitplyAssign.x;
             tempMultiplyAssign.y = y *= v4MulitplyAssign.y;
             tempMultiplyAssign.z = z *= v4MulitplyAssign.z;
-            tempMultiplyAssign.w = w *= v4MulitplyAssign.w;
+            tempMultiplyAssign.w = w ;
             return tempMultiplyAssign;
         }
         Vector4 operator *=  (const float v4ScalarMultiplyAssign) 
         {
             return Vector4(x *= v4ScalarMultiplyAssign, y *= v4ScalarMultiplyAssign,
-                z *= v4ScalarMultiplyAssign, w *= v4ScalarMultiplyAssign);
+                z *= v4ScalarMultiplyAssign, w);
         }
         Vector4 operator /= (const float v4ScalarDivideAssign)
         {
             return { x /= v4ScalarDivideAssign, y /= v4ScalarDivideAssign,
-            z /= v4ScalarDivideAssign, w /= v4ScalarDivideAssign };
+            z /= v4ScalarDivideAssign, w};
         }
         
-        Vector4 operator -()
+        Vector4 operator -() const
         {
-            return {};
+            return {-x, -y, -z, w};
         }
+
         friend bool operator == (Vector4 lhs,Vector4 v4Equality)
         {
             return lhs.x == v4Equality.x && lhs.y == v4Equality.y 
@@ -124,10 +131,22 @@ namespace MathLibrary
             return x != v4Inequality.x && y != v4Inequality.y 
                 && z != v4Inequality.z && w != v4Inequality.w;
         }
-        bool operator < (Vector4& v4LessThan)
+        friend bool operator < (Vector4& lhs, Vector4 v4LessThan)
         {
-            return x < v4LessThan.x && y < v4LessThan.y 
-                && z < v4LessThan.z && w < v4LessThan.w;
+            float v3a = v4LessThan.Magnitude();
+            float v3b = lhs.Magnitude();
+            if ((v3b < v3a) == true)
+            {
+                return true;
+            }
+            else if ((v3b < v3a) == false)
+            {
+                return false;
+            }
+            else if ((v3a < v3b) == false)
+            {
+                return false;
+            }
         }
         
         float& operator[] (int i)
@@ -164,40 +183,74 @@ namespace MathLibrary
         }
 
         //vector4's member functions
-        bool IsApproximatelyEqual(Vector4, float = 1e-4) const
+        bool IsApproximatelyEqual(Vector4 rhs, float = 1e-4) const
         {
-            return {};
+            float deltas[] = {
+                std::abs(x - rhs.x),
+                std::abs(y - rhs.y),
+                std::abs(z - rhs.z),
+                std::abs(w - rhs.w)
+            };
+            const int arraySize = sizeof(deltas) / sizeof(deltas[0]);
+            for (int i = 0; i < arraySize; ++i)
+            {
+                if (deltas[i] > epsilon)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
-        float Dot(Vector4) const
+        float Dot(Vector4 rhs) const
         {
-            return {};
+            return x * rhs.x + y * rhs.y + z * rhs.z;
+
         }
-        Vector4 Cross(Vector4) const
+        Vector4 Cross(Vector4 rhs) const
         {
-            return {};
+            return {
+           y * rhs.z - z * rhs.y,
+           z * rhs.x - x * rhs.z,
+           x * rhs.y - y * rhs.x,
+            w};
         }
 
         float Magnitude() const
         {
-            return{};
+            return std::hypot(x, y, z);
         }
         void Normalise()
         {
-
+            float mag = std::hypot(x, y, z);
+            if (mag == 0.f)
+            {
+                return;
+            }
+            x /= mag;
+            y /= mag;
+            z /= mag;
+            w = w;
         }
         Vector4 Normalised() const
         {
-            return {};
+            Vector4 result{ *this };
+            result.Normalise();
+            return result;
         }
         
-        float AngleBetween(Vector4) const
+        float AngleBetween(Vector4 other) const
         {
-            return {};
+            float dot = x * other.x + y * other.y + z * other.z;
+            float magLeft = std::sqrt(x*x + y*y +z*z);
+            float magRight = std::sqrt(other.x*other.x + other.y*other.y + other.z*other.z);
+            float acosResult = std::acos(dot / (magLeft * magRight));
+            return acosResult;
         }
-        float Distance(Vector4) const
+        float Distance(Vector4 rhs) const
         {
-            return {};
+            Vector4 diff = Vector4{ rhs.x - x, rhs.y - y, rhs.z - z, w };
+            return diff.Magnitude();
         }
     };
 }

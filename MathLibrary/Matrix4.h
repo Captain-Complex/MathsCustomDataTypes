@@ -76,13 +76,35 @@ namespace MathLibrary
             return *this;
         }
 
-        Vector4 operator*(Vector4&)const
+        friend Vector4 operator*(Matrix4 a, Vector4 b)
         {
-            return {};
+            return {
+                a.m1 * b.x + a.m2 * b.y + a.m3 * b.z + a.m4 *b.w,
+                a.m5 * b.x + a.m6 * b.y + a.m7 * b.z + a.m8 *b.w,
+                a.m9 * b.x + a.m10 * b.y + a.m11 * b.z + a.m12 * b.w,
+                a.m13 * b.x + a.m14 * b.y + a.m15 * b.z + a.m16 * b.w,
+            };
         }
-        Matrix4 operator*(Matrix4&)const
+        friend Matrix4 operator*(Matrix4 a, Matrix4 b)
         {
-            return {};
+            return {
+                a.m1 * b.m1 + a.m2 * b.m5 + a.m3 * b.m9 + a.m4 * b.m13,
+                a.m1 * b.m2 + a.m2 * b.m6 + a.m3 * b.m10 + a.m4 * b.m14,
+                a.m1 * b.m3 + a.m2 * b.m7 + a.m3 * b.m11 + a.m4 * b.m15,
+                a.m1 * b.m4 + a.m2 * b.m8 + a.m3 * b.m12 + a.m4 * b.m16,
+                a.m5 * b.m1 + a.m6 * b.m5 + a.m7 * b.m9 + a.m8 * b.m13,
+                a.m5 * b.m2 + a.m6 * b.m6 + a.m7 * b.m10 + a.m8 * b.m14,
+                a.m5 * b.m3 + a.m6 * b.m7 + a.m7 * b.m11 + a.m8 * b.m15,
+                a.m5 * b.m4 + a.m6 * b.m8 + a.m7 * b.m12 + a.m8 * b.m16,
+                a.m9 * b.m1 + a.m10 * b.m5 + a.m11 * b.m9 + a.m12 * b.m13,
+                a.m9 * b.m2 + a.m10 * b.m6 + a.m11 * b.m10 + a.m12 * b.m14,
+                a.m9 * b.m3 + a.m10 * b.m7 + a.m11 * b.m11 + a.m12 * b.m15,
+                a.m9 * b.m4 + a.m10 * b.m8 + a.m11 * b.m12 + a.m12 * b.m16,
+                a.m13 * b.m1 + a.m14 * b.m5 + a.m15 * b.m9 + a.m16 * b.m13,
+                a.m13 * b.m2 + a.m14 * b.m6 + a.m15 * b.m10 + a.m16 * b.m14,
+                a.m13 * b.m3 + a.m14 * b.m7 + a.m15 * b.m11 + a.m16 * b.m15,
+                a.m13 * b.m4 + a.m14 * b.m8 + a.m15 * b.m12 + a.m16 * b.m16
+            };
         }
         Matrix4& operator*=(Matrix4)
         {
@@ -223,7 +245,7 @@ namespace MathLibrary
                 std::abs(m13 - rhs.m13),
                 std::abs(m14 - rhs.m14),
                 std::abs(m15 - rhs.m15),
-                std::abs(m16 - rhs.m16),
+                std::abs(m16 - rhs.m16)
             };
             const int arraySize = sizeof(deltas) / sizeof(deltas[0]);
             for (int i = 0; i < arraySize; ++i)

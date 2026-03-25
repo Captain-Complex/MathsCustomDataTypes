@@ -28,35 +28,35 @@ namespace MathLibrary
             z = vec3z;
         }
         //vector3's operators
-        Vector3 operator + (Vector3& v3Add)const
+        Vector3 operator + (Vector3& v3Add)
         {
-            Vector3 tempAdd;
-            tempAdd.x = x + v3Add.x;
-            tempAdd.y = y + v3Add.y;
-            tempAdd.z = z + v3Add.z;
-            return tempAdd;
+            return {
+             x + v3Add.x,
+            y + v3Add.y,
+            z + v3Add.z
+            };
         }
-        Vector3 operator - (Vector3& v3Subtract)const
+        Vector3 operator - (Vector3& v3Subtract)
         {
-            Vector3 tempSubtract;
-            tempSubtract.x = x - v3Subtract.x;
-            tempSubtract.y = y - v3Subtract.y;
-            tempSubtract.z = z - v3Subtract.z;
-            return tempSubtract;
+            return {
+             x - v3Subtract.x,
+            y - v3Subtract.y,
+            z - v3Subtract.z
+            };
         }
-        Vector3 operator * (Vector3& v3Multiply)const
+        Vector3 operator * (Vector3& v3Multiply)
         {
-            Vector3 tempMultiply;
-            tempMultiply.x = x * v3Multiply.x;
-            tempMultiply.y = y * v3Multiply.y;
-            tempMultiply.z = z * v3Multiply.z;
-            return tempMultiply;
+            return {
+            x * v3Multiply.x,
+            y * v3Multiply.y,
+            z * v3Multiply.z
+            };
         }
-        Vector3 operator * (float v3ScalarMult) const
+        Vector3 operator * (float v3ScalarMult)
         {
             return Vector3(x * v3ScalarMult, y * v3ScalarMult, z * v3ScalarMult);
         }
-        Vector3 operator / (float v3ScalarDivide) const
+        Vector3 operator / (float v3ScalarDivide)
         {
             return Vector3(x / v3ScalarDivide, y / v3ScalarDivide, z / v3ScalarDivide);
         }
@@ -106,6 +106,7 @@ namespace MathLibrary
         {
             return { -x, -y, -z };
         }
+
         friend bool operator == (const Vector3 lhs,const Vector3& v3Equality)
         {
             return lhs.x == v3Equality.x && lhs.y == v3Equality.y && lhs.z == v3Equality.z;
@@ -114,20 +115,23 @@ namespace MathLibrary
         {
             return x != v3Inequality.x && y != v3Inequality.y && z != v3Inequality.z;
         }
-        friend bool operator < (Vector3 lhs,Vector3 v3LessThan)
+        friend bool operator < (Vector3 lhs, Vector3 v3LessThan)
         {
-            if (v3LessThan.x < lhs.x && v3LessThan.y < lhs.y && v3LessThan.z < lhs.z)
+            float v3a = v3LessThan.Magnitude();
+            float v3b = lhs.Magnitude();
+            if ((v3b < v3a) == true)
             {
                 return true;
             }
-            if (lhs.x < v3LessThan.x && lhs.y < v3LessThan.y && lhs.z < v3LessThan.z)
+            else if ((v3b < v3a) == false)
             {
                 return false;
             }
-            
-            
+            else if ((v3a < v3b) == false)
+            {
+                return false;
+            }
         }
-
         float& operator[] (int i)
         {
             switch(i)
@@ -164,8 +168,7 @@ namespace MathLibrary
             float deltas[] = {
                 std::abs(x - rhs.x),
                 std::abs(y - rhs.y),
-                std::abs(z - rhs.z),
-
+                std::abs(z - rhs.z)
             };
             const int arraySize = sizeof(deltas) / sizeof(deltas[0]);
             for (int i = 0; i < arraySize; ++i)
@@ -221,9 +224,10 @@ namespace MathLibrary
             float acosResult = std::acos(dot / (magLeft * magRight));
             return acosResult;
         }
-        float Distance(Vector3) const
+        float Distance(Vector3 rhs) const
         {
-            return {};
+            Vector3 diff = Vector3{rhs.x - x, rhs.y - y, rhs.z - z};
+            return diff.Magnitude();
         }
         float Angle2D() const
         {
