@@ -4,6 +4,13 @@ namespace MathLibrary
 {
     struct Matrix4
     {
+        //Column-Major
+        //|m1|m5|m9 |m13
+        //|m2|m6|m10|m14
+        //|m3|m7|m11|m15
+        //|m4|m8|m12|m16
+
+
         //matrix4's public flields
     public:
         float m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16;
@@ -71,56 +78,91 @@ namespace MathLibrary
             m16 = mat4m16;
         }
         //matrix4's operators
-        Matrix4& operator = (const Matrix4&)
+        Matrix4 operator = (const Matrix4& other)
         {
-            return *this;
+            Matrix4 temp;
+            temp.m1 = m1 = other.m1;
+            temp.m2 = m2 = other.m2;
+            temp.m3 = m3 = other.m3;
+            temp.m4 = m4 = other.m4;
+
+            temp.m5 = m5 = other.m5;
+            temp.m6 = m6 = other.m6;
+            temp.m7 = m7 = other.m7;
+            temp.m8 = m8 = other.m8;
+
+            temp.m9 = m9 = other.m9;
+            temp.m10 = m10 = other.m10;
+            temp.m11 = m11 = other.m11;
+            temp.m12 = m12 = other.m12;
+            
+            temp.m13 = m13 = other.m13;
+            temp.m14 = m14 = other.m14;
+            temp.m15 = m15 = other.m15;
+            temp.m16 = m16 = other.m16;
+
+            return temp;
         }
 
         friend Vector4 operator*(Matrix4 a, Vector4 b)
         {
             return {
-                a.m1 * b.x + a.m2 * b.y + a.m3 * b.z + a.m4 *b.w,
-                a.m5 * b.x + a.m6 * b.y + a.m7 * b.z + a.m8 *b.w,
-                a.m9 * b.x + a.m10 * b.y + a.m11 * b.z + a.m12 * b.w,
-                a.m13 * b.x + a.m14 * b.y + a.m15 * b.z + a.m16 * b.w,
+                a.m1 * b.x + a.m5 * b.y + a.m9 * b.z + a.m13 *b.w,
+                a.m2 * b.x + a.m6 * b.y + a.m10 * b.z + a.m14 *b.w,
+                a.m3 * b.x + a.m7 * b.y + a.m11 * b.z + a.m15 * b.w,
+                a.m4 * b.x + a.m8 * b.y + a.m12 * b.z + a.m16 * b.w,
             };
         }
         friend Matrix4 operator*(Matrix4 a, Matrix4 b)
         {
-            return {
-                a.m1 * b.m1 + a.m2 * b.m5 + a.m3 * b.m9 + a.m4 * b.m13,
-                a.m1 * b.m2 + a.m2 * b.m6 + a.m3 * b.m10 + a.m4 * b.m14,
-                a.m1 * b.m3 + a.m2 * b.m7 + a.m3 * b.m11 + a.m4 * b.m15,
-                a.m1 * b.m4 + a.m2 * b.m8 + a.m3 * b.m12 + a.m4 * b.m16,
-                a.m5 * b.m1 + a.m6 * b.m5 + a.m7 * b.m9 + a.m8 * b.m13,
-                a.m5 * b.m2 + a.m6 * b.m6 + a.m7 * b.m10 + a.m8 * b.m14,
-                a.m5 * b.m3 + a.m6 * b.m7 + a.m7 * b.m11 + a.m8 * b.m15,
-                a.m5 * b.m4 + a.m6 * b.m8 + a.m7 * b.m12 + a.m8 * b.m16,
-                a.m9 * b.m1 + a.m10 * b.m5 + a.m11 * b.m9 + a.m12 * b.m13,
-                a.m9 * b.m2 + a.m10 * b.m6 + a.m11 * b.m10 + a.m12 * b.m14,
-                a.m9 * b.m3 + a.m10 * b.m7 + a.m11 * b.m11 + a.m12 * b.m15,
-                a.m9 * b.m4 + a.m10 * b.m8 + a.m11 * b.m12 + a.m12 * b.m16,
-                a.m13 * b.m1 + a.m14 * b.m5 + a.m15 * b.m9 + a.m16 * b.m13,
-                a.m13 * b.m2 + a.m14 * b.m6 + a.m15 * b.m10 + a.m16 * b.m14,
-                a.m13 * b.m3 + a.m14 * b.m7 + a.m15 * b.m11 + a.m16 * b.m15,
-                a.m13 * b.m4 + a.m14 * b.m8 + a.m15 * b.m12 + a.m16 * b.m16
-            };
+            return a *= b;
         }
-        Matrix4& operator*=(Matrix4)
+        friend Matrix4& operator*=(Matrix4& lhs, Matrix4 rhs)
         {
-            return *this;
-        }
+            Vector4 row1{lhs.m1,lhs.m5,lhs.m9,lhs.m13};
+            Vector4 row2{lhs.m2,lhs.m6,lhs.m10,lhs.m14};
+            Vector4 row3{lhs.m3,lhs.m7,lhs.m11,lhs.m15};
+            Vector4 row4{lhs.m4,lhs.m8,lhs.m12,lhs.m16};
+            Vector4 column1{rhs.m1,rhs.m2,rhs.m3,rhs.m4};
+            Vector4 column2{rhs.m5,rhs.m6,rhs.m7,rhs.m8};
+            Vector4 column3{rhs.m9,rhs.m10,rhs.m11,rhs.m12};
+            Vector4 column4{rhs.m13,rhs.m14,rhs.m15,rhs.m16};
+            
+            lhs.m1 = row1.Dot(column1) + row1.w * column1.w;
+            lhs.m2 = row2.Dot(column1) + row2.w * column1.w;
+            lhs.m3 = row3.Dot(column1) + row3.w * column1.w;
+            lhs.m4 = row4.Dot(column1) + row4.w * column1.w;
 
-        friend bool operator==(Matrix4 lhs,Matrix4 equal)
+            lhs.m5 = row1.Dot(column2) + row1.w * column2.w;
+            lhs.m6 = row2.Dot(column2) + row2.w * column2.w;
+            lhs.m7 = row3.Dot(column2) + row3.w * column2.w;
+            lhs.m8 = row4.Dot(column2) + row4.w * column2.w;
+
+            lhs.m9 = row1.Dot(column3) + row1.w * column3.w;
+            lhs.m10 = row2.Dot(column3) + row2.w * column3.w;
+            lhs.m11 = row3.Dot(column3) + row3.w * column3.w;
+            lhs.m12 = row4.Dot(column3) + row4.w * column3.w;
+
+            lhs.m13 = row1.Dot(column4) + row1.w * column4.w;
+            lhs.m14 = row2.Dot(column4) + row2.w * column4.w;
+            lhs.m15 = row3.Dot(column4) + row3.w * column4.w;
+            lhs.m16 = row4.Dot(column4) + row4.w * column4.w;
+
+            return lhs;
+        }
+        friend bool operator==(Matrix4 lhs, Matrix4 equal)
         {
-            return  lhs.m1 == equal.m1 && lhs.m2 == equal.m2 && lhs.m3 == equal.m3 && lhs.m4 == equal.m4 && 
+            return  lhs.m1 == equal.m1 && lhs.m2 == equal.m2 && lhs.m3 == equal.m3 && lhs.m4 == equal.m4 &&
                 lhs.m5 == equal.m5 && lhs.m6 == equal.m6 && lhs.m7 == equal.m7 && lhs.m8 == equal.m8 &&
                 lhs.m9 == equal.m9 && lhs.m10 == equal.m10 && lhs.m11 == equal.m11 && lhs.m12 == equal.m12 &&
-                lhs.m13 == equal.m13 && lhs.m14 == equal.m14 && lhs.m15 == equal.m15 && lhs.m16 == equal.m16 ;
+                lhs.m13 == equal.m13 && lhs.m14 == equal.m14 && lhs.m15 == equal.m15 && lhs.m16 == equal.m16;
         }
-        friend bool operator!=(Matrix4,Matrix4)
+        friend bool operator!=(Matrix4 lhs, Matrix4 rhs)
         {
-            return {};
+            return lhs.m1 != rhs.m1 && lhs.m2 != rhs.m2 && lhs.m3 != rhs.m3 && lhs.m4 != rhs.m4 &&
+                lhs.m5 != rhs.m5 && lhs.m6 != rhs.m6 && lhs.m7 != rhs.m7 && lhs.m8 != rhs.m8 &&
+                lhs.m9 != rhs.m9 && lhs.m10 != rhs.m10 && lhs.m11 != rhs.m11 && lhs.m12 != rhs.m12 &&
+                lhs.m13 != rhs.m13 && lhs.m14 != rhs.m14 && lhs.m15 != rhs.m15 && lhs.m16 != rhs.m16;
         }
 
         float& operator[](int i)
@@ -203,7 +245,7 @@ namespace MathLibrary
 
             throw;
         }
-
+      
         //matrix4's member functions
         static Matrix4 MakeRotateX(float)
         {
@@ -250,7 +292,7 @@ namespace MathLibrary
             const int arraySize = sizeof(deltas) / sizeof(deltas[0]);
             for (int i = 0; i < arraySize; ++i)
             {
-                if (deltas[i] > epsilon)
+                if (!(deltas[i] <= epsilon))
                 {
                     return false;
                 }

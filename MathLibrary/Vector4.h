@@ -194,7 +194,7 @@ namespace MathLibrary
             const int arraySize = sizeof(deltas) / sizeof(deltas[0]);
             for (int i = 0; i < arraySize; ++i)
             {
-                if (deltas[i] > epsilon)
+                if (!(deltas[i] <= epsilon))
                 {
                     return false;
                 }

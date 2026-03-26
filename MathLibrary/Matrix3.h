@@ -1,9 +1,16 @@
 #pragma once
 #include "Vector3.h"
+
 namespace MathLibrary
 {
     struct Matrix3
     {
+        //Column-Major
+        //|m1|m4|m7
+        //|m2|m5|m8
+        //|m3|m6|m9
+
+
         //matrix3's public fields
     public:
         float m1, m2, m3, m4, m5, m6, m7, m8, m9;
@@ -48,35 +55,57 @@ namespace MathLibrary
             m9 = mat3m9;
         }
         //matrix3's operators
-        Matrix3& operator = (const Matrix3&)
+        Matrix3 operator = (const Matrix3& other) 
         {
-            return *this;
+            Matrix3 temp;
+            temp.m1 = m1 = other.m1;
+            temp.m2 = m2 = other.m2;
+            temp.m3 = m3 = other.m3;
+
+            temp.m4 = m4 = other.m4;
+            temp.m5 = m5 = other.m5;
+            temp.m6 = m6 = other.m6;
+
+            temp.m7 = m7 = other.m7;
+            temp.m8 = m8 = other.m8;
+            temp.m9 = m9 = other.m9;
+
+            return temp;
         }
 
         friend Vector3 operator * (Matrix3 a,Vector3 b)
         {
             return {
-                a.m1 * b.x + a.m2 * b.y + a.m3 * b.z,
-                a.m4 * b.x + a.m5 * b.y + a.m6 * b.z,
-                a.m7 * b.x + a.m8 * b.y + a.m9 * b.z,
+                a.m1*b.x + a.m4*b.y + a.m7*b.z,
+                a.m2*b.x + a.m5*b.y + a.m8*b.z,
+                a.m3*b.x + a.m6*b.y + a.m9*b.z
             };
         }
        friend Matrix3 operator * (Matrix3 a, Matrix3 b)
         {
-            return {
-                a.m1 * b.m1 + a.m2 * b.m4 + a.m3 * b.m7,
-                a.m1 * b.m2 + a.m2 * b.m5 + a.m3 * b.m8,
-                a.m1 * b.m3 + a.m2 * b.m6 + a.m3 * b.m9,
-                a.m4 * b.m1 + a.m5 * b.m4 + a.m6 * b.m7,
-                a.m4 * b.m2 + a.m5 * b.m5 + a.m6 * b.m8,
-                a.m4 * b.m3 + a.m5 * b.m6 + a.m6 * b.m9,
-                a.m7 * b.m1 + a.m8 * b.m4 + a.m9 * b.m7,
-                a.m7 * b.m2 + a.m8 * b.m5 + a.m9 * b.m8,
-                a.m7 * b.m3 + a.m8 * b.m6 + a.m9 * b.m9
-            };  
+            return a *= b;  
         }
-        friend Matrix3 operator *= (Matrix3& lhs, Matrix3)
+        friend Matrix3& operator *= (Matrix3& lhs, Matrix3 rhs)
         {
+            Vector3 row1{ lhs.m1,lhs.m4,lhs.m7 };
+            Vector3 row2{ lhs.m2,lhs.m5,lhs.m8 };
+            Vector3 row3{ lhs.m3,lhs.m6,lhs.m9 };
+            Vector3 column1{rhs.m1,rhs.m2,rhs.m3};
+            Vector3 column2{rhs.m4,rhs.m5,rhs.m6};
+            Vector3 column3{rhs.m7,rhs.m8,rhs.m9};
+
+            lhs.m1 = row1.Dot(column1);
+            lhs.m2 = row2.Dot(column1);
+            lhs.m3 = row3.Dot(column1);
+
+            lhs.m4 = row1.Dot(column2);
+            lhs.m5 = row2.Dot(column2);
+            lhs.m6 = row3.Dot(column2);
+            
+            lhs.m7 = row1.Dot(column3);
+            lhs.m8 = row2.Dot(column3);
+            lhs.m9 = row3.Dot(column3);
+
             return lhs;
         }
 
@@ -86,9 +115,11 @@ namespace MathLibrary
                 lhs.m4 == equal.m4 && lhs.m5 == equal.m5 && lhs.m6 == equal.m6 &&
                 lhs.m7 == equal.m7 && lhs.m8 == equal.m8 && lhs.m9 == equal.m9;
         }
-        friend bool operator!=(Matrix3,Matrix3)
+        friend bool operator!=(Matrix3 lhs,Matrix3 rhs)
         {
-            return {};
+            return lhs.m1 != rhs.m1 && lhs.m2 != rhs.m2 && lhs.m3 != rhs.m3 &&
+                lhs.m4 != rhs.m4 && lhs.m5 != rhs.m5 && lhs.m6 != rhs.m6 &&
+                lhs.m7 != rhs.m7 && lhs.m8 != rhs.m8 && lhs.m9 != rhs.m9;;
         }
 
         float& operator[](int i)
@@ -174,7 +205,7 @@ namespace MathLibrary
             const int arraySize = sizeof(deltas) / sizeof(deltas[0]);
             for (int i = 0; i < arraySize; ++i)
             {
-                if (deltas[i] > epsilon)
+                if (!(deltas[i] <= epsilon))
                 {
                     return false;
                 }
@@ -192,6 +223,7 @@ namespace MathLibrary
         }
         Vector3 GetTranslate()
         {
+            
             return {};
         }
 

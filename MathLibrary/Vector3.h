@@ -173,7 +173,7 @@ namespace MathLibrary
             const int arraySize = sizeof(deltas) / sizeof(deltas[0]);
             for (int i = 0; i < arraySize; ++i)
             {
-                if (deltas[i] > epsilon)
+                if (!(deltas[i] <= epsilon))
                 {
                     return false;
                 }
@@ -235,7 +235,20 @@ namespace MathLibrary
         }
         Vector3 CalculateTriangleNormal(Vector3 a, Vector3 b, Vector3 c)
         {
+            Vector3 diffAB = b - a;
+            Vector3 midAB = (a + b) / 2;
+            float disAB = diffAB.Magnitude();
 
+            Vector3 diffBC = c - b;
+            Vector3 midBC = (b + c) / 2;
+            float disBC = diffBC.Magnitude();
+
+            Vector3 cross = Vector3{
+            diffAB.y* diffBC.z - diffAB.z * diffBC.y,
+            diffAB.z* diffBC.x - diffAB.x * diffBC.z,
+            diffAB.x* diffBC.y - diffAB.y * diffBC.x
+            };
+            
         }
     };
 }
