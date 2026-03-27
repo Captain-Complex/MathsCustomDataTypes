@@ -176,17 +176,43 @@ namespace MathLibrary
         }
 
         //matrix3's member function
-        static Matrix3 MakeRotate(float)
+        static Matrix3 MakeRotate(float rad)
         {
-            return {};
+            Matrix3 result = {
+            1.f, 0.f, 0.f,
+            0.f, 1.f, 0.f,
+            0.f, 0.f, 1.f,};
+
+            float cosResult = cosf(rad);
+            float sinResult = sinf(rad);
+
+            result.m1 = cosResult;
+            result.m2 = sinResult;
+            result.m4 = -sinResult;
+            result.m5 = cosResult;
+
+            return result;
         }
-        static Matrix3 MakeScale(float, float)
+        static Matrix3 MakeScale(float x, float y)
         {
-            return {};
+            Matrix3 result = {
+            1.f, 0.f, 0.f,
+            0.f, 1.f, 0.f,
+            0.f, 0.f, 1.f, };
+            
+            result.m1 *= x;
+            result.m5 *= y;
+
+            return result;
         }
-        static Matrix3 MakeTranslation(float, float)
+        static Matrix3 MakeTranslation(float x, float y)
         {
-            return {};
+            Matrix3 result = {
+                1.f, 0.f, 0.f,
+                0.f, 1.f, 0.f,
+                x, y, 1.f
+            };
+            return result;
         }
 
         bool IsApproximatelyEqual(Matrix3 rhs, float epsilon = 1e-4f)const
@@ -215,16 +241,20 @@ namespace MathLibrary
 
         Vector3 GetRight()
         {
-            return {};
+            Vector3 right = {m4, m5, m6};
+            return right;
         }
         Vector3 GetForward()
         {
-            return {};
+            Vector3 forward = {m1, m2, m3};
+            return forward;
         }
         Vector3 GetTranslate()
         {
-            
-            return {};
+            //not tested so added translation
+            Matrix3::MakeTranslation(2.0f, 3.0f);
+            Vector3 translate = { m3, m6, m9 };
+            return translate;
         }
 
     };

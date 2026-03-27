@@ -117,5 +117,12 @@ namespace MathLibraryTests
 			const auto a = actual.GetAlpha();
 			Assert::AreEqual((unsigned char)25, a);
 		}
+
+		TEST_METHOD(Question8Test)
+		{
+			Color actual(94, 0, 0, 0);
+			actual.Question8Test();
+			Assert::AreEqual(6160384u, actual.rgba);
+		}
 	};
 }

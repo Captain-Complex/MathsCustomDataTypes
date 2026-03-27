@@ -28,12 +28,21 @@ namespace MathLibrary
             z = vec3z;
         }
         //vector3's operators
-        Vector3 operator + (Vector3& v3Add)
+        Vector3 operator + (Vector3& v3Add) 
         {
             return {
              x + v3Add.x,
             y + v3Add.y,
             z + v3Add.z
+            };
+        }
+        //added const version for the calculate triangle normal
+        friend Vector3 operator + (const Vector3& lhs, const Vector3& v3Add)
+        {
+            return {
+             lhs.x + v3Add.x,
+            lhs.y + v3Add.y,
+            lhs.z + v3Add.z
             };
         }
         Vector3 operator - (Vector3& v3Subtract)
@@ -44,6 +53,16 @@ namespace MathLibrary
             z - v3Subtract.z
             };
         }
+        //added const version for the calculate triangle normal
+        friend Vector3 operator - (const Vector3& lhs, const Vector3& v3Subtract)
+        {
+            return {
+             lhs.x - v3Subtract.x,
+            lhs.y - v3Subtract.y,
+            lhs.z - v3Subtract.z
+            };
+        }
+
         Vector3 operator * (Vector3& v3Multiply)
         {
             return {
@@ -233,22 +252,6 @@ namespace MathLibrary
         {
             return std::atan2(y,x);
         }
-        Vector3 CalculateTriangleNormal(Vector3 a, Vector3 b, Vector3 c)
-        {
-            Vector3 diffAB = b - a;
-            Vector3 midAB = (a + b) / 2;
-            float disAB = diffAB.Magnitude();
-
-            Vector3 diffBC = c - b;
-            Vector3 midBC = (b + c) / 2;
-            float disBC = diffBC.Magnitude();
-
-            Vector3 cross = Vector3{
-            diffAB.y* diffBC.z - diffAB.z * diffBC.y,
-            diffAB.z* diffBC.x - diffAB.x * diffBC.z,
-            diffAB.x* diffBC.y - diffAB.y * diffBC.x
-            };
-            
-        }
+        
     };
 }

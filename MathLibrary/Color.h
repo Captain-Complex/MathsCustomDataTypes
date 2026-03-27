@@ -7,7 +7,6 @@ namespace MathLibrary
         //color's public field
     public:
         unsigned int rgba;
-        
         //color's constructors
         Color() 
         {
@@ -41,6 +40,7 @@ namespace MathLibrary
             rgba = rgba & ~(0x000000FF << 24);
             rgba = rgba | (static_cast<unsigned int>(redValue) << 24);
         }
+
         unsigned char GetGreen() const
         {
             unsigned char gotGreen = static_cast<unsigned char>(rgba >> 16);
@@ -51,6 +51,7 @@ namespace MathLibrary
             rgba = rgba & ~(0x000000FF << 16);
             rgba = rgba | (static_cast<unsigned int>(greenValue) << 16);
         }
+
         unsigned char GetBlue() const
         {
             unsigned char gotBlue = static_cast<unsigned char>(rgba >> 8);
@@ -61,6 +62,7 @@ namespace MathLibrary
             rgba = rgba & ~(0x000000FF << 8);
             rgba = rgba | (static_cast<unsigned int>(blueValue) << 8);
         }
+
         unsigned char GetAlpha() const
         {
             unsigned char gotAlpha = static_cast<unsigned char>(rgba >> 0);
@@ -71,5 +73,11 @@ namespace MathLibrary
             rgba = rgba & ~(0x000000FF << 0);
             rgba = rgba | (static_cast<unsigned int>(alphaValue) << 0);
         }
+
+        void Question8Test()
+        {
+            rgba = rgba >> 8;
+        }
+            
     };
 }

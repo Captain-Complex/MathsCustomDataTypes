@@ -150,6 +150,7 @@ namespace MathLibrary
 
             return lhs;
         }
+
         friend bool operator==(Matrix4 lhs, Matrix4 equal)
         {
             return  lhs.m1 == equal.m1 && lhs.m2 == equal.m2 && lhs.m3 == equal.m3 && lhs.m4 == equal.m4 &&
@@ -247,26 +248,83 @@ namespace MathLibrary
         }
       
         //matrix4's member functions
-        static Matrix4 MakeRotateX(float)
+        static Matrix4 MakeRotateX(float rad)
         {
-            return {};
+            Matrix4 result = {
+            1.f, 0.f, 0.f, 0.f,
+            0.f, 1.f, 0.f, 0.f,
+            0.f, 0.f, 1.f, 0.f,
+            0.f, 0.f, 0.f, 1.f };
+
+            float cosResult = cosf(rad);
+            float sinResult = sinf(rad);
+
+            result.m6 = cosResult;
+            result.m7 = -sinResult;
+            result.m10 = sinResult;
+            result.m11 = cosResult;
+
+            return result;
         }
-        static Matrix4 MakeRotateY(float)
+        static Matrix4 MakeRotateY(float rad)
         {
-            return {};
+            Matrix4 result = {
+            1.f, 0.f, 0.f, 0.f,
+            0.f, 1.f, 0.f, 0.f,
+            0.f, 0.f, 1.f, 0.f,
+            0.f, 0.f, 0.f, 1.f };
+
+            float cosResult = cosf(rad);
+            float sinResult = sinf(rad);
+
+            result.m1 = cosResult;
+            result.m3 = sinResult;
+            result.m9 = -sinResult;
+            result.m11 = cosResult;
+
+            return result;
         }
-        static Matrix4 MakeRotateZ(float)
+        static Matrix4 MakeRotateZ(float rad)
         {
-            return {};
+            Matrix4 result = {
+            1.f, 0.f, 0.f, 0.f,
+            0.f, 1.f, 0.f, 0.f,
+            0.f, 0.f, 1.f, 0.f,
+            0.f, 0.f, 0.f, 1.f};
+
+            float cosResult = cosf(rad);
+            float sinResult = sinf(rad);
+
+            result.m1 = cosResult;
+            result.m2 = sinResult;
+            result.m5 = -sinResult;
+            result.m6 = cosResult;
+
+            return result;
         }
 
-        static Matrix4 MakeScale(float, float, float)
+        static Matrix4 MakeScale(float x, float y, float z)
         {
-            return {};
+            Matrix4 result = {
+                1.f, 0.f, 0.f, 0.f,
+                0.f, 1.f, 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                0.f, 0.f, 0.f, 1.f
+            };
+            result.m1 *= x;
+            result.m6 *= y;
+            result.m11 *= z;
+            return result;
         }
-        static Matrix4 MakeTranslation(float, float, float)
+        static Matrix4 MakeTranslation(float x, float y, float z)
         {
-            return {};
+            Matrix4 result = {
+                1.f, 0.f, 0.f, 0.f,
+                0.f, 1.f, 0.f, 0.f,
+                0.f, 0.f, 1.f, 0.f,
+                x, y, z, 1.f
+            };
+            return result;
         }
 
         bool IsApproximatelyEqual(Matrix4 rhs, float epsilon = 1e-4f)const 
@@ -302,22 +360,38 @@ namespace MathLibrary
 
         Vector4 GetRight()
         {
-            return {};
+            Vector4 right = { m1, m5, m3, m13 };
+            return right;
         }
         Vector4 GetUp()
         {
-            return {};
+            Vector4 up = {m5, m6, m10, m14};
+            return up;
             
         }
         Vector4 GetForward()
         {
-            return {};
+            Vector4 forward = { m3, m10, m11, m15 };
+            return forward;
         }
         Vector4 GetPosition()
         {
-            return {};
+            //not tested so added translation
+            Matrix4::MakeTranslation(2.0f, 3.0f, 4.0f);
+            Vector4 postion = { m4, m8, m12, m16 };
+            return postion;
         }
 
+        Matrix4 SetTranslate(Vector4 other)
+        {
+            //included in assignment but not tests
+            Matrix4 translate;
+            translate.m13 = other.x;
+            translate.m14 = other.y;
+            translate.m15 = other.z;
+            translate.m16 = other.w;
+            return translate;
+        }
 
     };
 }
