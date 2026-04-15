@@ -55,7 +55,7 @@ namespace MathLibrary
             m9 = mat3m9;
         }
         //matrix3's operators
-        Matrix3 operator = (const Matrix3& other) 
+        const Matrix3& operator = (const Matrix3& other)
         {
             Matrix3 temp;
             temp.m1 = m1 = other.m1;
@@ -117,9 +117,9 @@ namespace MathLibrary
         }
         friend bool operator!=(Matrix3 lhs,Matrix3 rhs)
         {
-            return lhs.m1 != rhs.m1 && lhs.m2 != rhs.m2 && lhs.m3 != rhs.m3 &&
-                lhs.m4 != rhs.m4 && lhs.m5 != rhs.m5 && lhs.m6 != rhs.m6 &&
-                lhs.m7 != rhs.m7 && lhs.m8 != rhs.m8 && lhs.m9 != rhs.m9;;
+            return  lhs.m1 != rhs.m1 || lhs.m2 != rhs.m2 || lhs.m3 != rhs.m3 ||
+                lhs.m4 != rhs.m4 || lhs.m5 != rhs.m5 || lhs.m6 != rhs.m6 ||
+                lhs.m7 != rhs.m7 || lhs.m8 != rhs.m8 || lhs.m9 != rhs.m9;;
         }
 
         float& operator[](int i)
@@ -239,21 +239,20 @@ namespace MathLibrary
             return true;
         }
 
-        Vector3 GetRight()
+        Vector3 GetRight() const
         {
             Vector3 right = {m4, m5, m6};
             return right;
         }
-        Vector3 GetForward()
+        Vector3 GetForward() const
         {
             Vector3 forward = {m1, m2, m3};
             return forward;
         }
-        Vector3 GetTranslate()
+        Vector3 GetTranslate() const
         {
             //not tested so added translation
-            Matrix3::MakeTranslation(2.0f, 3.0f);
-            Vector3 translate = { m3, m6, m9 };
+            Vector3 translate = { m7, m8, m9 };
             return translate;
         }
 

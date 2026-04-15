@@ -31,7 +31,7 @@ namespace MathLibrary
             w = vec4w;
         }
         //vector4's operators
-        Vector4 operator + (Vector4 v4Add)
+        Vector4 operator + (Vector4 v4Add) const
         {
             return {
             x + v4Add.x,
@@ -40,7 +40,7 @@ namespace MathLibrary
             w
             };
         }
-        Vector4 operator - (Vector4& v4Subtract)
+        Vector4 operator - (Vector4& v4Subtract) const
         {
             return {
             x - v4Subtract.x,
@@ -49,7 +49,7 @@ namespace MathLibrary
             w
             };
         }
-        Vector4 operator * (Vector4& v4Multiply)
+        Vector4 operator * (Vector4& v4Multiply)const 
         {
             return {
             x * v4Multiply.x,
@@ -58,18 +58,18 @@ namespace MathLibrary
             w
             };
         }
-        Vector4 operator *  ( float v4ScalarMultiplyAssign) 
+        Vector4 operator *  ( float v4ScalarMultiplyAssign) const
         {
             return { x * v4ScalarMultiplyAssign, y * v4ScalarMultiplyAssign,
                 z * v4ScalarMultiplyAssign, w};
         }
-        Vector4 operator / (float v4ScalarDivide) 
+        Vector4 operator / (float v4ScalarDivide) const
         {
             return { x / v4ScalarDivide, y / v4ScalarDivide,
             z / v4ScalarDivide, w};
         }
         
-        Vector4 operator = (Vector4& v4Assignment)
+        const Vector4& operator = (const Vector4& v4Assignment)
         {
             Vector4 TempAssignment;
             TempAssignment.x = x = v4Assignment.x;
@@ -78,7 +78,7 @@ namespace MathLibrary
             TempAssignment.w = w = v4Assignment.w;
             return TempAssignment;
         }
-        Vector4 operator += (Vector4 v4AddAssign)
+        const Vector4 operator += (const Vector4 v4AddAssign)
         {
             Vector4 TempAddAssign;
             TempAddAssign.x = x += v4AddAssign.x;
@@ -87,7 +87,7 @@ namespace MathLibrary
             TempAddAssign.w = w;
             return TempAddAssign;
         }
-        Vector4 operator -= (Vector4 v4SubtractAssign)
+        const Vector4 operator -= (const Vector4 v4SubtractAssign)
         {
             Vector4 tempSubtractAssign;
             tempSubtractAssign.x = x -= v4SubtractAssign.x;
@@ -96,7 +96,7 @@ namespace MathLibrary
             tempSubtractAssign.w = w;
             return tempSubtractAssign;
         }
-        Vector4 operator *= (Vector4 v4MulitplyAssign)
+        const Vector4 operator *= (const Vector4 v4MulitplyAssign)
         {
             Vector4 tempMultiplyAssign;
             tempMultiplyAssign.x = x *= v4MulitplyAssign.x;
@@ -105,12 +105,12 @@ namespace MathLibrary
             tempMultiplyAssign.w = w ;
             return tempMultiplyAssign;
         }
-        Vector4 operator *=  (const float v4ScalarMultiplyAssign) 
+        const Vector4 operator *=  (const float v4ScalarMultiplyAssign) 
         {
             return Vector4(x *= v4ScalarMultiplyAssign, y *= v4ScalarMultiplyAssign,
                 z *= v4ScalarMultiplyAssign, w);
         }
-        Vector4 operator /= (const float v4ScalarDivideAssign)
+        const Vector4 operator /= (const float v4ScalarDivideAssign)
         {
             return { x /= v4ScalarDivideAssign, y /= v4ScalarDivideAssign,
             z /= v4ScalarDivideAssign, w};
@@ -121,17 +121,17 @@ namespace MathLibrary
             return {-x, -y, -z, w};
         }
 
-        friend bool operator == (Vector4 lhs,Vector4 v4Equality)
+        friend bool operator == (const Vector4 lhs,const Vector4 v4Equality)
         {
             return lhs.x == v4Equality.x && lhs.y == v4Equality.y 
                 && lhs.z == v4Equality.z && lhs.w == v4Equality.w;
         }
-        bool operator != (Vector4& v4Inequality)
+        bool operator != (Vector4& v4Inequality) const
         {
-            return x != v4Inequality.x && y != v4Inequality.y 
-                && z != v4Inequality.z && w != v4Inequality.w;
+            return x != v4Inequality.x || y != v4Inequality.y 
+                || z != v4Inequality.z || w != v4Inequality.w;
         }
-        friend bool operator < (Vector4& lhs, Vector4 v4LessThan)
+        friend bool operator < (const Vector4& lhs, const Vector4 v4LessThan)
         {
             float v3a = v4LessThan.Magnitude();
             float v3b = lhs.Magnitude();
@@ -139,14 +139,7 @@ namespace MathLibrary
             {
                 return true;
             }
-            else if ((v3b < v3a) == false)
-            {
-                return false;
-            }
-            else if ((v3a < v3b) == false)
-            {
-                return false;
-            }
+            return false;
         }
         
         float& operator[] (int i)
@@ -183,7 +176,7 @@ namespace MathLibrary
         }
 
         //vector4's member functions
-        bool IsApproximatelyEqual(Vector4 rhs, float = 1e-4) const
+        bool IsApproximatelyEqual(Vector4 rhs, float epsilon = 1e-4) const
         {
             float deltas[] = {
                 std::abs(x - rhs.x),

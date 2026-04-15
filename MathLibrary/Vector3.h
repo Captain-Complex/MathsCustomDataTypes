@@ -6,7 +6,7 @@ namespace MathLibrary
     {
         //vector3's public field
     public:
-        float x, y, z = 0.f;
+        float x, y, z;
 
         //vector3's constructors
         Vector3()
@@ -28,7 +28,7 @@ namespace MathLibrary
             z = vec3z;
         }
         //vector3's operators
-        Vector3 operator + (Vector3& v3Add) 
+        Vector3 operator + (Vector3& v3Add) const
         {
             return {
              x + v3Add.x,
@@ -36,34 +36,16 @@ namespace MathLibrary
             z + v3Add.z
             };
         }
-        //added const version for the calculate triangle normal
-        friend Vector3 operator + (const Vector3& lhs, const Vector3& v3Add)
+        Vector3 operator - (const Vector3& v3Subtract) const
         {
             return {
-             lhs.x + v3Add.x,
-            lhs.y + v3Add.y,
-            lhs.z + v3Add.z
-            };
-        }
-        Vector3 operator - (Vector3& v3Subtract)
-        {
-            return {
-             x - v3Subtract.x,
+            x - v3Subtract.x,
             y - v3Subtract.y,
             z - v3Subtract.z
             };
         }
-        //added const version for the calculate triangle normal
-        friend Vector3 operator - (const Vector3& lhs, const Vector3& v3Subtract)
-        {
-            return {
-             lhs.x - v3Subtract.x,
-            lhs.y - v3Subtract.y,
-            lhs.z - v3Subtract.z
-            };
-        }
 
-        Vector3 operator * (Vector3& v3Multiply)
+        Vector3 operator * (Vector3& v3Multiply) const
         {
             return {
             x * v3Multiply.x,
@@ -71,16 +53,16 @@ namespace MathLibrary
             z * v3Multiply.z
             };
         }
-        Vector3 operator * (float v3ScalarMult)
+        Vector3 operator * (float v3ScalarMult) const
         {
             return Vector3(x * v3ScalarMult, y * v3ScalarMult, z * v3ScalarMult);
         }
-        Vector3 operator / (float v3ScalarDivide)
+        Vector3 operator / (float v3ScalarDivide) const
         {
             return Vector3(x / v3ScalarDivide, y / v3ScalarDivide, z / v3ScalarDivide);
         }
         
-        Vector3 operator = (Vector3& v3Assignment)
+        const Vector3& operator = (const Vector3& v3Assignment)  
         {
             Vector3 tempAssignment;
             tempAssignment.x = x = v3Assignment.x;
@@ -88,7 +70,7 @@ namespace MathLibrary
             tempAssignment.z = z = v3Assignment.z;
             return tempAssignment;
         }
-        Vector3 operator += (Vector3& v3AddAssign)
+        const Vector3 operator += (const Vector3& v3AddAssign)  
         {
             Vector3 tempAddAssign;
             tempAddAssign.x = x += v3AddAssign.x;
@@ -96,7 +78,7 @@ namespace MathLibrary
             tempAddAssign.z = z += v3AddAssign.z;
             return tempAddAssign;
         }
-        Vector3 operator -= (Vector3& v3SubtractAssign)
+         const Vector3 operator -=  (const Vector3& v3SubtractAssign) 
         {
             Vector3 tempSubtractAssign;
             tempSubtractAssign.x = x -= v3SubtractAssign.x;
@@ -104,7 +86,7 @@ namespace MathLibrary
             tempSubtractAssign.z = z -= v3SubtractAssign.z;
             return tempSubtractAssign;
         }
-        Vector3 operator *= (Vector3& v3MulitplyAssign)
+        const Vector3 operator *= (const Vector3& v3MulitplyAssign) 
         {
             Vector3 tempMultiplyAssign;
             tempMultiplyAssign.x = x *= v3MulitplyAssign.x;
@@ -112,11 +94,11 @@ namespace MathLibrary
             tempMultiplyAssign.z = z *= v3MulitplyAssign.z;
             return tempMultiplyAssign;
         }
-        Vector3 operator *= (const float v3ScalarMultAssign)
+      const Vector3 operator *= (const float v3ScalarMultAssign) 
         {
             return Vector3(x *= v3ScalarMultAssign, y *= v3ScalarMultAssign, z *= v3ScalarMultAssign);
         }
-        Vector3 operator /= (const float v3ScalarDivideAssign) 
+       const  Vector3 operator /= (const float v3ScalarDivideAssign) 
         {
             return Vector3(x /= v3ScalarDivideAssign, y /= v3ScalarDivideAssign, z /= v3ScalarDivideAssign);
         }
@@ -126,15 +108,15 @@ namespace MathLibrary
             return { -x, -y, -z };
         }
 
-        friend bool operator == (const Vector3 lhs,const Vector3& v3Equality)
+        friend bool operator == (const Vector3& lhs,const Vector3& v3Equality)
         {
             return lhs.x == v3Equality.x && lhs.y == v3Equality.y && lhs.z == v3Equality.z;
         }
-        bool operator != (Vector3& v3Inequality)const
+        friend bool operator != (const Vector3& lhs, const Vector3& v3Inequality)
         {
-            return x != v3Inequality.x && y != v3Inequality.y && z != v3Inequality.z;
+            return lhs.x != v3Inequality.x || lhs.y != v3Inequality.y || lhs.z != v3Inequality.z;
         }
-        friend bool operator < (Vector3 lhs, Vector3 v3LessThan)
+        friend bool operator < (const Vector3& lhs, const Vector3& v3LessThan)
         {
             float v3a = v3LessThan.Magnitude();
             float v3b = lhs.Magnitude();
@@ -142,14 +124,7 @@ namespace MathLibrary
             {
                 return true;
             }
-            else if ((v3b < v3a) == false)
-            {
-                return false;
-            }
-            else if ((v3a < v3b) == false)
-            {
-                return false;
-            }
+            return false;
         }
         float& operator[] (int i)
         {

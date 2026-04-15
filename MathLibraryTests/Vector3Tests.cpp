@@ -16,18 +16,9 @@ namespace MathLibraryTests
 	// This function should calculate the normal vector of this triangle
 	Vector3 CalculateTriangleNormal(const Vector3& A,const Vector3& B,const Vector3& C){
 		Vector3 diffAB = B - A;
-		Vector3 midAB = (A + B) / 2;
-		float disAB = diffAB.Magnitude();
-
 		Vector3 diffAC = C - A;
-		Vector3 midAC = (A + C) / 2;
-		float disBC = diffAC.Magnitude();
-
-		Vector3 cross = Vector3{
-		diffAB.y * diffAC.z - diffAB.z * diffAC.y,
-		diffAB.z * diffAC.x - diffAB.x * diffAC.z,
-		diffAB.x * diffAC.y - diffAB.y * diffAC.x
-		};
+		
+		Vector3 cross = diffAB.Cross(diffAC);
 		cross.Normalise();
 		return cross;
 	}

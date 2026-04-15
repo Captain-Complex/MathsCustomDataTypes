@@ -78,7 +78,7 @@ namespace MathLibrary
             m16 = mat4m16;
         }
         //matrix4's operators
-        Matrix4 operator = (const Matrix4& other)
+        const Matrix4& operator = (const Matrix4& other)
         {
             Matrix4 temp;
             temp.m1 = m1 = other.m1;
@@ -160,10 +160,10 @@ namespace MathLibrary
         }
         friend bool operator!=(Matrix4 lhs, Matrix4 rhs)
         {
-            return lhs.m1 != rhs.m1 && lhs.m2 != rhs.m2 && lhs.m3 != rhs.m3 && lhs.m4 != rhs.m4 &&
-                lhs.m5 != rhs.m5 && lhs.m6 != rhs.m6 && lhs.m7 != rhs.m7 && lhs.m8 != rhs.m8 &&
-                lhs.m9 != rhs.m9 && lhs.m10 != rhs.m10 && lhs.m11 != rhs.m11 && lhs.m12 != rhs.m12 &&
-                lhs.m13 != rhs.m13 && lhs.m14 != rhs.m14 && lhs.m15 != rhs.m15 && lhs.m16 != rhs.m16;
+            return lhs.m1 != rhs.m1 || lhs.m2 != rhs.m2 || lhs.m3 != rhs.m3 || lhs.m4 != rhs.m4 ||
+                lhs.m5 != rhs.m5 || lhs.m6 != rhs.m6 || lhs.m7 != rhs.m7 || lhs.m8 != rhs.m8 ||
+                lhs.m9 != rhs.m9 || lhs.m10 != rhs.m10 || lhs.m11 != rhs.m11 || lhs.m12 != rhs.m12 ||
+                lhs.m13 != rhs.m13 || lhs.m14 != rhs.m14 || lhs.m15 != rhs.m15 || lhs.m16 != rhs.m16;
         }
 
         float& operator[](int i)
@@ -358,39 +358,39 @@ namespace MathLibrary
             return true;
         }
 
-        Vector4 GetRight()
+        Vector4 GetRight() const
         {
-            Vector4 right = { m1, m5, m3, m13 };
+            Vector4 right = { m1, m2, m3, m4 };
             return right;
         }
-        Vector4 GetUp()
+        Vector4 GetUp() const
         {
-            Vector4 up = {m5, m6, m10, m14};
+            Vector4 up = {m5, m6, m7, m8};
             return up;
             
         }
-        Vector4 GetForward()
+        Vector4 GetForward() const
         {
-            Vector4 forward = { m3, m10, m11, m15 };
+            Vector4 forward = { m9, m10, m11, m12 };
             return forward;
         }
-        Vector4 GetPosition()
+        Vector4 GetPosition() const
         {
             //not tested so added translation
-            Matrix4::MakeTranslation(2.0f, 3.0f, 4.0f);
-            Vector4 postion = { m4, m8, m12, m16 };
+            Vector4 postion = { m13, m14, m15, m16 };
             return postion;
         }
 
         Matrix4 SetTranslate(Vector4 other)
         {
             //included in assignment but not tests
-            Matrix4 translate;
-            translate.m13 = other.x;
-            translate.m14 = other.y;
-            translate.m15 = other.z;
-            translate.m16 = other.w;
-            return translate;
+            return{0,0,0,0,
+                   0,0,0,0,
+                   0,0,0,0,
+            m13 = other.x,
+            m14 = other.y,
+            m15 = other.z,
+            m16 = other.w };
         }
 
     };
