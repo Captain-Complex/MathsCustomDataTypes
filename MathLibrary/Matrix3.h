@@ -55,22 +55,21 @@ namespace MathLibrary
             m9 = mat3m9;
         }
         //matrix3's operators
-        const Matrix3& operator = (const Matrix3& other)
+        Matrix3& operator = (const Matrix3& other)
         {
-            Matrix3 temp;
-            temp.m1 = m1 = other.m1;
-            temp.m2 = m2 = other.m2;
-            temp.m3 = m3 = other.m3;
+            m1 = other.m1;
+            m2 = other.m2;
+            m3 = other.m3;
 
-            temp.m4 = m4 = other.m4;
-            temp.m5 = m5 = other.m5;
-            temp.m6 = m6 = other.m6;
+            m4 = other.m4;
+            m5 = other.m5;
+            m6 = other.m6;
 
-            temp.m7 = m7 = other.m7;
-            temp.m8 = m8 = other.m8;
-            temp.m9 = m9 = other.m9;
+            m7 = other.m7;
+            m8 = other.m8;
+            m9 = other.m9;
 
-            return temp;
+            return *this;
         }
 
         friend Vector3 operator * (Matrix3 a,Vector3 b)

@@ -28,7 +28,7 @@ namespace MathLibrary
             z = vec3z;
         }
         //vector3's operators
-        Vector3 operator + (Vector3& v3Add) const
+        Vector3 operator + (const Vector3& v3Add) const
         {
             return {
              x + v3Add.x,
@@ -45,7 +45,7 @@ namespace MathLibrary
             };
         }
 
-        Vector3 operator * (Vector3& v3Multiply) const
+        Vector3 operator * (const Vector3& v3Multiply) const
         {
             return {
             x * v3Multiply.x,
@@ -62,45 +62,47 @@ namespace MathLibrary
             return Vector3(x / v3ScalarDivide, y / v3ScalarDivide, z / v3ScalarDivide);
         }
         
-        const Vector3& operator = (const Vector3& v3Assignment)  
+        Vector3& operator = (const Vector3& v3Assignment)  
         {
-            Vector3 tempAssignment;
-            tempAssignment.x = x = v3Assignment.x;
-            tempAssignment.y = y = v3Assignment.y;
-            tempAssignment.z = z = v3Assignment.z;
-            return tempAssignment;
+            x = v3Assignment.x;
+            y = v3Assignment.y;
+            z = v3Assignment.z;
+            return *this;
         }
-        const Vector3 operator += (const Vector3& v3AddAssign)  
+        Vector3& operator += (const Vector3& v3AddAssign)  
         {
-            Vector3 tempAddAssign;
-            tempAddAssign.x = x += v3AddAssign.x;
-            tempAddAssign.y = y += v3AddAssign.y;
-            tempAddAssign.z = z += v3AddAssign.z;
-            return tempAddAssign;
+            x += v3AddAssign.x;
+            y += v3AddAssign.y;
+            z += v3AddAssign.z;
+            return *this;
         }
-         const Vector3 operator -=  (const Vector3& v3SubtractAssign) 
+        Vector3& operator -=  (const Vector3& v3SubtractAssign) 
         {
-            Vector3 tempSubtractAssign;
-            tempSubtractAssign.x = x -= v3SubtractAssign.x;
-            tempSubtractAssign.y = y -= v3SubtractAssign.y;
-            tempSubtractAssign.z = z -= v3SubtractAssign.z;
-            return tempSubtractAssign;
+            x -= v3SubtractAssign.x;
+            y -= v3SubtractAssign.y;
+            z -= v3SubtractAssign.z;
+            return *this;
         }
-        const Vector3 operator *= (const Vector3& v3MulitplyAssign) 
+        Vector3& operator *= (const Vector3& v3MulitplyAssign) 
         {
-            Vector3 tempMultiplyAssign;
-            tempMultiplyAssign.x = x *= v3MulitplyAssign.x;
-            tempMultiplyAssign.y = y *= v3MulitplyAssign.y;
-            tempMultiplyAssign.z = z *= v3MulitplyAssign.z;
-            return tempMultiplyAssign;
+            x *= v3MulitplyAssign.x;
+            y *= v3MulitplyAssign.y;
+            z *= v3MulitplyAssign.z;
+            return *this;
         }
-      const Vector3 operator *= (const float v3ScalarMultAssign) 
+        Vector3& operator *= (const float v3ScalarMultAssign) 
         {
-            return Vector3(x *= v3ScalarMultAssign, y *= v3ScalarMultAssign, z *= v3ScalarMultAssign);
+           x *= v3ScalarMultAssign;
+           y *= v3ScalarMultAssign;
+           z *= v3ScalarMultAssign;
+           return *this;
         }
-       const  Vector3 operator /= (const float v3ScalarDivideAssign) 
+        Vector3& operator /= (const float v3ScalarDivideAssign) 
         {
-            return Vector3(x /= v3ScalarDivideAssign, y /= v3ScalarDivideAssign, z /= v3ScalarDivideAssign);
+            x /= v3ScalarDivideAssign;
+            y /= v3ScalarDivideAssign;
+            z /= v3ScalarDivideAssign;
+            return *this;
         }
 
         Vector3 operator -() const

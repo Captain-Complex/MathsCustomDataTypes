@@ -31,7 +31,7 @@ namespace MathLibrary
             w = vec4w;
         }
         //vector4's operators
-        Vector4 operator + (Vector4 v4Add) const
+        Vector4 operator + (const Vector4& v4Add) const
         {
             return {
             x + v4Add.x,
@@ -40,7 +40,7 @@ namespace MathLibrary
             w
             };
         }
-        Vector4 operator - (Vector4& v4Subtract) const
+        Vector4 operator - (const Vector4& v4Subtract) const
         {
             return {
             x - v4Subtract.x,
@@ -49,7 +49,7 @@ namespace MathLibrary
             w
             };
         }
-        Vector4 operator * (Vector4& v4Multiply)const 
+        Vector4 operator * (const Vector4& v4Multiply)const 
         {
             return {
             x * v4Multiply.x,
@@ -69,51 +69,53 @@ namespace MathLibrary
             z / v4ScalarDivide, w};
         }
         
-        const Vector4& operator = (const Vector4& v4Assignment)
+        Vector4& operator = (const Vector4& v4Assignment)
         {
-            Vector4 TempAssignment;
-            TempAssignment.x = x = v4Assignment.x;
-            TempAssignment.y = y = v4Assignment.y;
-            TempAssignment.z = z = v4Assignment.z;
-            TempAssignment.w = w = v4Assignment.w;
-            return TempAssignment;
+            x = v4Assignment.x;
+            y = v4Assignment.y;
+            z = v4Assignment.z;
+            w = v4Assignment.w;
+            return *this;
         }
-        const Vector4 operator += (const Vector4 v4AddAssign)
+        Vector4& operator += (const Vector4 v4AddAssign)
         {
-            Vector4 TempAddAssign;
-            TempAddAssign.x = x += v4AddAssign.x;
-            TempAddAssign.y = y += v4AddAssign.y;
-            TempAddAssign.z = z += v4AddAssign.z;
-            TempAddAssign.w = w;
-            return TempAddAssign;
+            x += v4AddAssign.x;
+            y += v4AddAssign.y;
+            z += v4AddAssign.z;
+            w;
+            return *this;
         }
-        const Vector4 operator -= (const Vector4 v4SubtractAssign)
+        Vector4& operator -= (const Vector4 v4SubtractAssign)
         {
-            Vector4 tempSubtractAssign;
-            tempSubtractAssign.x = x -= v4SubtractAssign.x;
-            tempSubtractAssign.y = y -= v4SubtractAssign.y;
-            tempSubtractAssign.z = z -= v4SubtractAssign.z;
-            tempSubtractAssign.w = w;
-            return tempSubtractAssign;
+            x -= v4SubtractAssign.x;
+            y -= v4SubtractAssign.y;
+            z -= v4SubtractAssign.z;
+            w;
+            return *this;
         }
-        const Vector4 operator *= (const Vector4 v4MulitplyAssign)
+        Vector4& operator *= (const Vector4 v4MulitplyAssign)
         {
-            Vector4 tempMultiplyAssign;
-            tempMultiplyAssign.x = x *= v4MulitplyAssign.x;
-            tempMultiplyAssign.y = y *= v4MulitplyAssign.y;
-            tempMultiplyAssign.z = z *= v4MulitplyAssign.z;
-            tempMultiplyAssign.w = w ;
-            return tempMultiplyAssign;
+            x *= v4MulitplyAssign.x;
+            y *= v4MulitplyAssign.y;
+            z *= v4MulitplyAssign.z;
+            w ;
+            return *this;
         }
-        const Vector4 operator *=  (const float v4ScalarMultiplyAssign) 
+        Vector4& operator *=  (const float v4ScalarMultiplyAssign) 
         {
-            return Vector4(x *= v4ScalarMultiplyAssign, y *= v4ScalarMultiplyAssign,
-                z *= v4ScalarMultiplyAssign, w);
+            x *= v4ScalarMultiplyAssign;
+            y *= v4ScalarMultiplyAssign;
+            z *= v4ScalarMultiplyAssign;
+            w;
+            return *this;
         }
-        const Vector4 operator /= (const float v4ScalarDivideAssign)
+        Vector4& operator /= (const float v4ScalarDivideAssign)
         {
-            return { x /= v4ScalarDivideAssign, y /= v4ScalarDivideAssign,
-            z /= v4ScalarDivideAssign, w};
+            x /= v4ScalarDivideAssign;
+            y /= v4ScalarDivideAssign;
+            z /= v4ScalarDivideAssign;
+            w;
+            return *this;
         }
         
         Vector4 operator -() const

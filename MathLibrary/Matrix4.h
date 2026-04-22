@@ -78,30 +78,29 @@ namespace MathLibrary
             m16 = mat4m16;
         }
         //matrix4's operators
-        const Matrix4& operator = (const Matrix4& other)
+        Matrix4& operator = (const Matrix4& other)
         {
-            Matrix4 temp;
-            temp.m1 = m1 = other.m1;
-            temp.m2 = m2 = other.m2;
-            temp.m3 = m3 = other.m3;
-            temp.m4 = m4 = other.m4;
+            m1 = other.m1;
+            m2 = other.m2;
+            m3 = other.m3;
+            m4 = other.m4;
 
-            temp.m5 = m5 = other.m5;
-            temp.m6 = m6 = other.m6;
-            temp.m7 = m7 = other.m7;
-            temp.m8 = m8 = other.m8;
+            m5 = other.m5;
+            m6 = other.m6;
+            m7 = other.m7;
+            m8 = other.m8;
 
-            temp.m9 = m9 = other.m9;
-            temp.m10 = m10 = other.m10;
-            temp.m11 = m11 = other.m11;
-            temp.m12 = m12 = other.m12;
+            m9 = other.m9;
+            m10 = other.m10;
+            m11 = other.m11;
+            m12 = other.m12;
             
-            temp.m13 = m13 = other.m13;
-            temp.m14 = m14 = other.m14;
-            temp.m15 = m15 = other.m15;
-            temp.m16 = m16 = other.m16;
+            m13 = other.m13;
+            m14 = other.m14;
+            m15 = other.m15;
+            m16 = other.m16;
 
-            return temp;
+            return *this;
         }
 
         friend Vector4 operator*(Matrix4 a, Vector4 b)

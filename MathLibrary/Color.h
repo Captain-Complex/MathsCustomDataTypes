@@ -25,7 +25,7 @@ namespace MathLibrary
             rgba = rgba | (static_cast<unsigned int>(a) << 0);
         }
         //color's operators
-        bool operator == (Color& C) const
+        bool operator == (const Color& C) const
         {
             return rgba == C.rgba;
         }
