@@ -359,37 +359,35 @@ namespace MathLibrary
 
         Vector4 GetRight() const
         {
-            Vector4 right = { m1, m2, m3, m4 };
+            Vector4 right = { m1, m2, m3, 0 };
             return right;
         }
         Vector4 GetUp() const
         {
-            Vector4 up = {m5, m6, m7, m8};
+            Vector4 up = {m5, m6, m7, 0};
             return up;
             
         }
         Vector4 GetForward() const
         {
-            Vector4 forward = { m9, m10, m11, m12 };
+            Vector4 forward = { m9, m10, m11, 0 };
             return forward;
         }
         Vector4 GetPosition() const
         {
             //not tested so added translation
-            Vector4 postion = { m13, m14, m15, m16 };
+            Vector4 postion = { m13, m14, m15, 1 };
             return postion;
         }
 
-        Matrix4 SetTranslate(Vector4 other)
+        void SetTranslate(Vector4 other)
         {
             //included in assignment but not tests
-            return{0,0,0,0,
-                   0,0,0,0,
-                   0,0,0,0,
-            m13 = other.x,
-            m14 = other.y,
-            m15 = other.z,
-            m16 = other.w };
+            m1 = 1, m2 = 0, m3 = 0, m4 = 0,
+            m5 = 0, m6 = 1, m7 = 0, m8 = 0,
+            m9 = 0, m10 = 0, m11 = 1, m12 = 0,
+            m13 = other.x, m14 = other.y,
+            m15 = other.z, m16 = other.w;
         }
 
     };
